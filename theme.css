@@ -1029,8 +1029,7 @@ body.theme-light.is-translucent :is(.modal, .suggestion-container, .menu, .promp
   border-radius: var(--radius-m);
   box-shadow: var(--shadow-s);
   max-width: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;
+  overflow: hidden;
   white-space: pre;
 }
 
@@ -1045,6 +1044,10 @@ body .markdown-source-view.mod-cm6 {
   padding: 14px 16px;
 }
 .markdown-rendered pre > code {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
   background: transparent;
   padding: 0;
   border: none;
@@ -1054,6 +1057,11 @@ body .markdown-source-view.mod-cm6 {
   white-space: inherit;
   overflow-wrap: normal;
   word-break: normal;
+}
+/* Scroll only the code; the native copy button stays on the outer frame. */
+body .markdown-rendered pre > button.copy-code-button {
+  z-index: 1;
+  background-color: var(--code-background);
 }
 
 /* Live Preview: the local VSCode Code Scroll extension supplies a shared
@@ -1068,13 +1076,18 @@ body .markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock {
 }
 
 /* Shared VS Code 2026 palette for CodeMirror (Live Preview) and Prism (Reading).
- * The two engines tokenize languages differently; equivalent token categories
- * use the same variables. Scope these rules to code, not Markdown prose.
+ * VSCode Code Scroll supplies Prism marks in Live Preview for matching token
+ * classification. Native CodeMirror mappings remain available without it.
  * Source: microsoft/vscode extensions/theme-defaults/themes/2026-{light,dark}.json */
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock.vscode-prism-code span:not(.token) {
+  color: inherit !important;
+}
 body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-keyword,
 body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-keyword,
 body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-controlKeyword,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock.vscode-prism-code .token.keyword,
 body .markdown-rendered pre .token.keyword,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock.vscode-prism-code .token.atrule,
 body .markdown-rendered pre .token.atrule {
   color: var(--code-keyword);
 }
@@ -1082,9 +1095,13 @@ body .markdown-rendered pre .token.atrule {
 body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-string,
 body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-string-2,
 body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-string,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock.vscode-prism-code .token.string,
 body .markdown-rendered pre .token.string,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock.vscode-prism-code .token.char,
 body .markdown-rendered pre .token.char,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock.vscode-prism-code .token.attr-value,
 body .markdown-rendered pre .token.attr-value,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock.vscode-prism-code .token.url,
 body .markdown-rendered pre .token.url {
   color: var(--code-string);
 }
@@ -1093,9 +1110,13 @@ body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-comment,
 body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-block-comment,
 body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-line-comment,
 body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-comment,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock.vscode-prism-code .token.comment,
 body .markdown-rendered pre .token.comment,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock.vscode-prism-code .token.prolog,
 body .markdown-rendered pre .token.prolog,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock.vscode-prism-code .token.doctype,
 body .markdown-rendered pre .token.doctype,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock.vscode-prism-code .token.cdata,
 body .markdown-rendered pre .token.cdata {
   color: var(--code-comment);
 }
@@ -1106,10 +1127,15 @@ body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-atom,
 body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-atom,
 body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-bool,
 body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-literal,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock.vscode-prism-code .token.number,
 body .markdown-rendered pre .token.number,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock.vscode-prism-code .token.boolean,
 body .markdown-rendered pre .token.boolean,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock.vscode-prism-code .token.constant,
 body .markdown-rendered pre .token.constant,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock.vscode-prism-code .token.symbol,
 body .markdown-rendered pre .token.symbol,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock.vscode-prism-code .token.entity,
 body .markdown-rendered pre .token.entity {
   color: var(--code-number);
 }
@@ -1117,6 +1143,7 @@ body .markdown-rendered pre .token.entity {
 body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-variable,
 body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-variable-3,
 body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-variableName,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock.vscode-prism-code .token.variable,
 body .markdown-rendered pre .token.variable {
   color: var(--code-variable);
 }
@@ -1125,7 +1152,9 @@ body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-def,
 body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-definition,
 body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-function,
 body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-functionName,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock.vscode-prism-code .token.function,
 body .markdown-rendered pre .token.function,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock.vscode-prism-code .token.function-variable,
 body .markdown-rendered pre .token.function-variable {
   color: var(--code-function);
 }
@@ -1133,8 +1162,11 @@ body .markdown-rendered pre .token.function-variable {
 body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-property,
 body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-propertyName,
 body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-variableName2,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock.vscode-prism-code .token.property,
 body .markdown-rendered pre .token.property,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock.vscode-prism-code .token.property-access,
 body .markdown-rendered pre .token.property-access,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock.vscode-prism-code .token.parameter,
 body .markdown-rendered pre .token.parameter {
   color: var(--code-property);
 }
@@ -1143,7 +1175,9 @@ body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-type,
 body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-qualifier,
 body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-typeName,
 body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-className,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock.vscode-prism-code .token.class-name,
 body .markdown-rendered pre .token.class-name,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock.vscode-prism-code .token.namespace,
 body .markdown-rendered pre .token.namespace {
   color: var(--code-type);
 }
@@ -1151,25 +1185,30 @@ body .markdown-rendered pre .token.namespace {
 body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-builtin,
 body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-variable-2,
 body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-standard,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock.vscode-prism-code .token.builtin,
 body .markdown-rendered pre .token.builtin {
   color: var(--code-builtin);
 }
 
 body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-tag,
 body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-tagName,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock.vscode-prism-code .token.tag,
 body .markdown-rendered pre .token.tag,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock.vscode-prism-code .token.selector,
 body .markdown-rendered pre .token.selector {
   color: var(--code-tag);
 }
 
 body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-attribute,
 body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-attributeName,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock.vscode-prism-code .token.attr-name,
 body .markdown-rendered pre .token.attr-name {
   color: var(--code-attribute);
 }
 
 body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-operator,
 body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-operator,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock.vscode-prism-code .token.operator,
 body .markdown-rendered pre .token.operator {
   color: var(--code-operator);
 }
@@ -1178,6 +1217,7 @@ body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-punctuation,
 body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-bracket,
 body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-punctuation,
 body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-bracket,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock.vscode-prism-code .token.punctuation,
 body .markdown-rendered pre .token.punctuation {
   color: var(--code-punctuation);
 }
@@ -1196,26 +1236,31 @@ body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-url {
 
 body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-regexp,
 body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-regexp,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock.vscode-prism-code .token.regex,
 body .markdown-rendered pre .token.regex {
   color: var(--code-regex);
 }
 
 body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-error,
 body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-invalid,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock.vscode-prism-code .token.invalid,
 body .markdown-rendered pre .token.invalid {
   color: var(--code-invalid);
 }
 
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock.vscode-prism-code .token.important,
 body .markdown-rendered pre .token.important {
   color: var(--code-important);
 }
 
 body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-deleted,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock.vscode-prism-code .token.deleted,
 body .markdown-rendered pre .token.deleted {
   color: var(--code-deleted);
 }
 
 body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-inserted,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock.vscode-prism-code .token.inserted,
 body .markdown-rendered pre .token.inserted {
   color: var(--code-inserted);
 }
@@ -1223,6 +1268,7 @@ body .markdown-rendered pre .token.inserted {
 /* VS Code gives JSON object keys their own tag-green scope. */
 body .markdown-source-view.mod-cm6 .HyperMD-codeblock:is(.language-json, .language-jsonc, .language-json5) .cm-property,
 body .markdown-source-view.mod-cm6 .HyperMD-codeblock:is(.language-json, .language-jsonc, .language-json5) .tok-propertyName,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock.vscode-prism-code:is(.language-json, .language-jsonc, .language-json5) .token.property,
 body .markdown-rendered pre :is(.language-json, .language-jsonc, .language-json5) .token.property {
   color: var(--code-json-property);
 }
@@ -1369,6 +1415,12 @@ input[type="checkbox"] {
 .task-list-item-checkbox:hover,
 input[type="checkbox"]:hover {
   border-color: var(--checkbox-border-color-hover);
+}
+/* Reading view's native +0.2em offset conflicts with middle alignment.
+ * Match the baseline adjustment used by Live Preview instead. */
+body .markdown-preview-view .task-list-item-checkbox {
+  top: -0.1em;
+  vertical-align: middle;
 }
 .task-list-item-checkbox:checked,
 input[type="checkbox"]:checked {

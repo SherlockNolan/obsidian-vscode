@@ -8,7 +8,7 @@
 
 - **Light & Dark mode** — both first-class, follows system color scheme
 - **Theme accent colors** — `#0069CC` for 2026 Light, `#005FB8` for Light Modern, and `#2F72C4` for this theme's Dark palette; configurable per mode, with optional Obsidian accent override
-- **Complete VSCode Dark+ / Light+ syntax highlighting** — keyword / string / comment / function / variable / type / number / control / regex, double-mapped for both CodeMirror 6 (editor) and Prism.js (reading view)
+- **VSCode syntax highlighting** — 2026 Light/Dark colors and optional Light Modern colors; the local **VSCode Code Scroll** companion supplies matching Prism token classification in Live Preview and Reading view
 - **macOS Tahoe-style polish** — SF Pro / SF Mono system font stack, 8–12 px rounded corners, defocused-window dim, `prefers-reduced-motion` support
 - **Vibrancy / translucency** — sidebar, status bar, command palette and modals get `backdrop-filter` blur when *Translucent window* is enabled
 - **Overlay scrollbars** — hidden by default, fade in on hover, macOS-style
@@ -47,6 +47,8 @@ Under **Settings → Style Settings → VSCode**, **使用 Obsidian 强调色覆
 Resetting a picker clears its custom color. Light mode then follows the selected preset (`#0069CC` for 2026 Light or `#005FB8` for Light Modern); dark mode returns to `#2F72C4`. Style Settings displays the 2026 Light value as its light default. Custom theme colors are retained while the Obsidian override is enabled. Buttons, focus indicators, checkboxes, links and accent backgrounds share the selected source, and button text contrasts with the actual accent background.
 
 **两端对齐与自动断词** is enabled by default, including without Style Settings. Its switch controls justification and automatic hyphenation in both reading and editing views. The former `hyphenation-and-justification.css` snippet is integrated into the theme; it no longer needs to be enabled separately.
+
+Keep the local **VSCode Code Scroll** plugin enabled for matching editable code highlighting and per-block horizontal scrolling in Live Preview. Reading-view code scrolls inside its frame while its copy button stays at the upper right.
 
 Every color is a CSS variable. Override in a snippet:
 
