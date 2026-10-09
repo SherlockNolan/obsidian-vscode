@@ -50,6 +50,12 @@ Resetting a picker clears its custom color. Light mode then follows the selected
 
 Keep the local **VSCode Code Scroll** plugin enabled for matching editable code highlighting and per-block horizontal scrolling in Live Preview. Reading-view code scrolls inside its frame while its copy button stays at the upper right.
 
+**代码块自动折行** is off by default. Enable it in **Settings → Style Settings → VSCode** to wrap code in both views, including long words and paths. PDF export always wraps, even when the switch is off. With the companion plugin enabled, a return arrow marks each visual continuation; actual source-line endings stay unmarked. Arrows are painted and do not alter copied code.
+
+**代码块行号** is also off by default. Enable it in the same section to number original code lines in both views and PDF, starting at 1 for each block. Blank lines are counted; visual continuations have no extra number. Numbers stay in the left gutter during horizontal scrolling and are excluded from copied code. Keep **VSCode Code Scroll** enabled for the line wrappers and editable-line numbers.
+
+In `theme.css`, `--vscode-code-flair-top` (default `0px`) and `--vscode-code-flair-right` (`12px`) position the Live Preview language/copy label. Lower top values move it up. `--vscode-code-wrap-marker-inset` (`12px`) controls the Live Preview return-arrow inset from the right edge.
+
 Every color is a CSS variable. Override in a snippet:
 
 ```css

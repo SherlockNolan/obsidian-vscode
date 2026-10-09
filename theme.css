@@ -64,6 +64,16 @@ settings:
     description: 在阅读视图和编辑视图中启用正文两端对齐与自动断词。
     type: class-toggle
     default: true
+  - id: vscode-code-wrap
+    title: 代码块自动折行
+    description: 在阅读视图与实时预览中折行，可直接断开长词和路径。默认关闭，关闭时横向滚动；PDF 导出始终折行，折行处显示 ↩。
+    type: class-toggle
+    default: false
+  - id: vscode-code-line-numbers
+    title: 代码块行号
+    description: 在阅读视图、实时预览和 PDF 中显示代码行号，每个代码块从 1 开始；折行后的续行不重复编号。
+    type: class-toggle
+    default: false
 */
 
 
@@ -1073,6 +1083,164 @@ body .markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock {
   white-space: pre !important;
   overflow-wrap: normal !important;
   word-break: normal !important;
+}
+
+/* The companion preserves original newlines and Prism spans in these wrappers.
+ * With wrapping disabled they do not create additional layout boxes. */
+.markdown-rendered pre > code > .vscode-code-print-line {
+  display: contents;
+}
+
+body {
+  /* Live Preview label placement and the return-arrow distance from its frame. */
+  --vscode-code-flair-top: 3px;
+  --vscode-code-flair-right: 6px;
+  --vscode-code-wrap-marker-inset: 12px;
+  --vscode-code-number-width: 2ch;
+  /* A repeating return arrow, painted rather than inserted into copied text. */
+  --vscode-code-wrap-marker: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 24'%3E%3Cpath d='M13 6v5a3 3 0 0 1-3 3H3m4-4-4 4 4 4' fill='none' stroke='black' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+body .markdown-source-view.mod-cm6 .code-block-flair {
+  top: var(--vscode-code-flair-top);
+  right: var(--vscode-code-flair-right);
+  padding-block: 2px;
+}
+
+/* Numbers are generated content, never characters in the document or clipboard.
+ * Their translation cancels horizontal scrolling while the code remains editable. */
+body.vscode-code-line-numbers .markdown-rendered pre > code > .vscode-code-print-line {
+  display: block;
+  position: relative;
+  min-height: 1lh;
+  padding-inline-start: calc(var(--vscode-code-number-width) + 1.5ch);
+}
+body.vscode-code-line-numbers .markdown-rendered pre > code > .vscode-code-line-break {
+  display: none;
+}
+body.vscode-code-line-numbers .markdown-source-view.mod-cm6 .cm-line.vscode-code-scroll-line {
+  padding-inline-start: calc(16px + var(--vscode-code-number-width) + 1.5ch);
+}
+body.vscode-code-line-numbers .markdown-rendered pre > code > .vscode-code-print-line::before,
+body.vscode-code-line-numbers .markdown-source-view.mod-cm6 .cm-line.vscode-code-scroll-line::before {
+  content: attr(data-vscode-code-line-number);
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  width: calc(var(--vscode-code-number-width) + 1ch);
+  padding-inline-end: 1ch;
+  box-sizing: border-box;
+  background-color: var(--code-background);
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  white-space: pre;
+  transform: translateX(var(--vscode-code-scroll-offset, 0px));
+  z-index: 1;
+  user-select: none;
+  pointer-events: none;
+}
+body.vscode-code-line-numbers .markdown-source-view.mod-cm6 .cm-line.vscode-code-scroll-line::before {
+  inset-inline-start: 16px;
+}
+body.vscode-code-wrap.vscode-code-line-numbers .markdown-rendered pre > code > .vscode-code-print-line::before,
+body.vscode-code-wrap.vscode-code-line-numbers .markdown-source-view.mod-cm6 .cm-line.vscode-code-scroll-line::before {
+  transform: none;
+}
+
+/* Opt-in wrapping for both views; no hyphens are added to code. */
+body.vscode-code-wrap .markdown-rendered pre > code,
+body.vscode-code-wrap .markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock {
+  white-space: pre-wrap !important;
+  overflow-wrap: anywhere !important;
+  word-break: break-all !important;
+  hyphens: none !important;
+  text-align: left;
+}
+body.vscode-code-wrap .markdown-rendered pre > code {
+  overflow: visible;
+}
+body.vscode-code-wrap .markdown-rendered pre > code > .vscode-code-print-line {
+  display: block;
+  position: relative;
+  min-height: 1lh;
+  padding-inline-end: 1.5em;
+}
+body.vscode-code-wrap .markdown-rendered pre > code > .vscode-code-line-break,
+body.vscode-code-wrap .markdown-source-view.mod-cm6 .cm-line .vscode-code-scrollbar {
+  display: none !important;
+}
+body.vscode-code-wrap .markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock:not(.HyperMD-codeblock-begin):not(.HyperMD-codeblock-end) {
+  position: relative;
+  padding-inline-end: calc(1.5em + var(--vscode-code-wrap-marker-inset));
+}
+
+/* Paint one arrow per visual continuation, leaving the final row unmarked. */
+body.vscode-code-wrap .markdown-rendered pre > code > .vscode-code-print-line::after,
+body.vscode-code-wrap .markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock:not(.HyperMD-codeblock-begin):not(.HyperMD-codeblock-end)::after {
+  content: "";
+  position: absolute;
+  inset-block: 0 1lh;
+  left: auto;
+  inset-inline-end: 0;
+  width: 1em;
+  height: auto;
+  background-color: var(--text-muted);
+  -webkit-mask: var(--vscode-code-wrap-marker) right top / 1em 1lh repeat-y;
+  mask: var(--vscode-code-wrap-marker) right top / 1em 1lh repeat-y;
+  pointer-events: none;
+}
+body.vscode-code-wrap .markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock:not(.HyperMD-codeblock-begin):not(.HyperMD-codeblock-end)::after {
+  inset-inline-end: var(--vscode-code-wrap-marker-inset);
+}
+
+/* PDF export always wraps, independently of the screen setting. Never clip
+ * overflowing paths, long words, nested tokens or code continuing onto a page. */
+@media print {
+  body .markdown-rendered pre,
+  body .markdown-rendered pre > code {
+    max-width: 100% !important;
+    min-width: 0 !important;
+    overflow: visible !important;
+    white-space: pre-wrap !important;
+    overflow-wrap: anywhere !important;
+    word-break: break-all !important;
+    hyphens: none !important;
+    text-align: left !important;
+  }
+  body .markdown-rendered pre > code :is(span, a) {
+    white-space: inherit !important;
+    overflow-wrap: inherit !important;
+    word-break: inherit !important;
+    hyphens: none !important;
+  }
+  body .markdown-rendered pre > code > .vscode-code-print-line {
+    display: block;
+    position: relative;
+    min-height: 1lh;
+    padding-inline-end: 1.5em;
+  }
+  body .markdown-rendered pre > code > .vscode-code-line-break,
+  body .markdown-rendered pre > button.copy-code-button {
+    display: none !important;
+  }
+  body .markdown-rendered pre > code > .vscode-code-print-line::after {
+    content: "";
+    position: absolute;
+    inset-block: 0 1lh;
+    inset-inline-end: 0;
+    width: 1em;
+    background-color: var(--text-muted);
+    -webkit-mask: var(--vscode-code-wrap-marker) right top / 1em 1lh repeat-y;
+    mask: var(--vscode-code-wrap-marker) right top / 1em 1lh repeat-y;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+    pointer-events: none;
+  }
+  body.vscode-code-line-numbers .markdown-rendered pre > code > .vscode-code-print-line::before {
+    transform: none;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
 }
 
 /* Shared VS Code 2026 palette for CodeMirror (Live Preview) and Prism (Reading).
