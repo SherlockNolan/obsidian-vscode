@@ -41,6 +41,29 @@ settings:
         value: vscode-light-2026
       - label: VS Code Light Modern
         value: vscode-light-modern
+  - id: vscode-use-obsidian-accent
+    title: 使用 Obsidian 强调色覆写
+    description: 开启后使用「外观 → 强调色」；关闭后使用下方主题强调色，未自定义时跟随当前配色。
+    type: class-toggle
+    default: false
+  - id: vscode-accent
+    title: 主题强调色（浅色 / 深色）
+    description: 仅关闭 Obsidian 强调色覆写时生效。两个颜色可分别重置；浅色重置后跟随配色（2026 为 #0069CC，Light Modern 为 #005FB8），深色为 #2F72C4。
+    type: variable-themed-color
+    format: hex
+    opacity: false
+    default-light: '#0069CC'
+    default-dark: '#2F72C4'
+    alt-format:
+      - id: vscode-accent
+        format: hsl-split
+      - id: vscode-accent
+        format: rgb-split
+  - id: vscode-hyphenation-justification
+    title: 两端对齐与自动断词
+    description: 在阅读视图和编辑视图中启用正文两端对齐与自动断词。
+    type: class-toggle
+    default: true
 */
 
 
@@ -92,19 +115,17 @@ settings:
  *  Section 2 — Light Mode Variables
  *  VS Code 2026 Light workbench and syntax colors
  * ============================================================ */
-/* Obsidian writes an inline foreground based on the custom accent color.
- * This theme supplies its own blue backgrounds, so keep their foreground
- * white even when the saved custom accent would choose black text. */
-body.theme-light,
-body.theme-dark {
-  --text-on-accent: #FFFFFF !important;
-}
-
 .theme-light {
   /* — Accent / interactive — */
-  --interactive-accent:        #0069CC;
-  --interactive-accent-hover:  #0063C1;
-  --interactive-accent-rgb:    0, 105, 204;
+  --vscode-accent-default: #0069CC;
+  --vscode-accent-default-h: 209.11764705882354;
+  --vscode-accent-default-s: 100%;
+  --vscode-accent-default-l: 40%;
+  --vscode-accent-default-r: 0;
+  --vscode-accent-default-g: 105;
+  --vscode-accent-default-b: 204;
+  --vscode-accent-hover-default: #0063C1;
+  --vscode-accent-hover-mix: black;
   --interactive-accent-background:    #FAFAFD;
 
   /* — Backgrounds — */
@@ -117,7 +138,6 @@ body.theme-dark {
   --background-modifier-active-hover: #00000025;
   --background-modifier-border:        #F0F1F2;
   --background-modifier-border-hover:  #D8D8D8;
-  --background-modifier-border-focus:  #0069CC;
   --background-modifier-form-field:    #FFFFFF;
   --background-modifier-error:         rgba(209, 52, 56, 0.12);
   --background-modifier-success:       rgba(22, 130, 93, 0.12);
@@ -142,12 +162,9 @@ body.theme-dark {
   --text-normal:        #202020;
   --text-muted:         #606060;
   --text-faint:         #999999;
-  --text-accent:        #0069CC;
-  --text-accent-hover:  #0063C1;
   --text-error:         #D13438;
   --text-success:       #16825D;
   --text-warning:       #BC7500;
-  --text-selection:     rgba(0, 95, 184, 0.18);
   --text-highlight-bg:  rgba(255, 213, 0, 0.45);
 
   /* — Headings (subtle blue gradient feel) — */
@@ -160,10 +177,6 @@ body.theme-dark {
   --inline-title-color: var(--text-normal);
 
   /* — Links — */
-  --link-color:                #005FB8;
-  --link-color-hover:          #1A6FBE;
-  --link-external-color:       #005FB8;
-  --link-external-color-hover: #AF00DB;
   --link-unresolved-color:     #D13438;
   --link-unresolved-opacity:   0.7;
 
@@ -208,10 +221,6 @@ body.theme-dark {
   --callout-import:   175, 0, 219;
 
   /* — Tags — */
-  --tag-color:       #005FB8;
-  --tag-color-hover: #1A6FBE;
-  --tag-background:  rgba(0, 95, 184, 0.10);
-  --tag-background-hover: rgba(0, 95, 184, 0.18);
   --tag-radius:      var(--radius-pill);
   --tag-border-color: transparent;
   --tag-border-width: 0;
@@ -235,11 +244,7 @@ body.theme-dark {
   --italic-color:            #795E26;
 
   /* — Checkbox — */
-  --checkbox-color:               #005FB8;
-  --checkbox-color-hover:         #1A6FBE;
   --checkbox-border-color:        rgba(149, 164, 191, 0.7);
-  --checkbox-border-color-hover:  #005FB8;
-  --checkbox-marker-color:        #FFFFFF;
 
   /* — Graph view — */
   --graph-line:             #95A4BF;
@@ -247,7 +252,6 @@ body.theme-dark {
   --graph-node-tag:         #267F99;
   --graph-node-attachment:  #795E26;
   --graph-node-unresolved:  #B0B0B0;
-  --graph-node-focused:     #005FB8;
   --graph-text:             #1F1F1F;
   --graph-fill-tag:         #267F99;
   --graph-fill-attachment:  #795E26;
@@ -265,7 +269,6 @@ body.theme-dark {
   --color-text-day:           var(--text-normal);
   --color-text-today:         var(--interactive-accent);
   --color-background-day:     transparent;
-  --color-background-today:   rgba(0, 95, 184, 0.12);
   --color-dot:                var(--interactive-accent);
 
   /* — Tab — */
@@ -290,11 +293,9 @@ body.theme-dark {
 
   /* — Indentation guides — */
   --indentation-guide-color:        rgba(0, 0, 0, 0.06);
-  --indentation-guide-color-active: rgba(0, 95, 184, 0.30);
 
   /* — Divider — */
   --divider-color:        var(--background-modifier-border);
-  --divider-color-hover:  #005FB8;
 
   /* — Shadows — */
   --shadow-s: 0 1px 2px rgba(15, 30, 60, 0.06);
@@ -308,9 +309,12 @@ body.theme-dark {
  * with syntax colors inherited from light_plus.json and light_vs.json.
  * Keep typography, Markdown separators and code scrolling independent. */
 .theme-light.vscode-light-modern {
-  --interactive-accent: #005FB8;
-  --interactive-accent-hover: #0258A8;
-  --interactive-accent-rgb: 0, 95, 184;
+  --vscode-accent-default: #005FB8;
+  --vscode-accent-default-h: 209.02173913043478;
+  --vscode-accent-default-l: 36.07843137254902%;
+  --vscode-accent-default-g: 95;
+  --vscode-accent-default-b: 184;
+  --vscode-accent-hover-default: #0258A8;
   --interactive-accent-background: #F8F8F8;
   --background-primary: #FFFFFF;
   --background-primary-alt: #F8F8F8;
@@ -320,7 +324,6 @@ body.theme-dark {
   --background-modifier-active-hover: #E8E8E8;
   --background-modifier-border: #E5E5E5;
   --background-modifier-border-hover: #CECECE;
-  --background-modifier-border-focus: #005FB8;
   --background-modifier-form-field: #FFFFFF;
 
   --titlebar-background: #F8F8F8;
@@ -334,22 +337,15 @@ body.theme-dark {
   --status-bar-border-color: #E5E5E5;
   --vscode-widget-background: #F8F8F8;
   --vscode-widget-border: #E5E5E5;
-  --vscode-tab-active-border: #005FB8;
+  --vscode-tab-active-border: var(--interactive-accent);
   --vscode-status-bar-hover-background: #1F1F1F11;
 
   --text-normal: #3B3B3B;
   --text-muted: #616161;
   --text-faint: #767676;
-  --text-accent: #005FB8;
-  --text-accent-hover: #005FB8;
   --text-error: #F85149;
   --text-success: #2EA043;
-  --text-selection: #ADD6FF80;
   --setting-group-heading-color: #1F1F1F;
-  --link-color: #005FB8;
-  --link-color-hover: #005FB8;
-  --link-external-color: #005FB8;
-  --link-external-color-hover: #005FB8;
   --link-unresolved-color: #F85149;
   --tab-text-color: #616161;
   --tab-text-color-active: #3B3B3B;
@@ -382,13 +378,8 @@ body.theme-dark {
 
   --blockquote-border-color: #E5E5E5;
   --blockquote-color: #3B3B3B;
-  --checkbox-color: #005FB8;
-  --checkbox-color-hover: #0258A8;
   --checkbox-border-color: #CECECE;
-  --checkbox-border-color-hover: #005FB8;
-  --divider-color-hover: #005FB8;
   --indentation-guide-color: #D3D3D3;
-  --indentation-guide-color-active: #939393;
   --canvas-background: #F8F8F8;
   --canvas-card-bg: #FFFFFF;
   --canvas-edge: #616161;
@@ -401,9 +392,15 @@ body.theme-dark {
  * ============================================================ */
 .theme-dark {
   /* — Accent — */
-  --interactive-accent:        #2F72C4;
-  --interactive-accent-hover:  #4A8AD8;
-  --interactive-accent-rgb:    47, 114, 196;
+  --vscode-accent-default: #2F72C4;
+  --vscode-accent-default-h: 213.0201342281879;
+  --vscode-accent-default-s: 61.31687242798354%;
+  --vscode-accent-default-l: 47.64705882352941%;
+  --vscode-accent-default-r: 47;
+  --vscode-accent-default-g: 114;
+  --vscode-accent-default-b: 196;
+  --vscode-accent-hover-default: #4A8AD8;
+  --vscode-accent-hover-mix: white;
   --interactive-accent-background:    #242526;
 
   /* — Backgrounds — */
@@ -416,7 +413,6 @@ body.theme-dark {
   --background-modifier-active-hover: rgba(47, 114, 196, 0.22);
   --background-modifier-border:       rgba(255, 255, 255, 0.08);
   --background-modifier-border-hover: rgba(255, 255, 255, 0.16);
-  --background-modifier-border-focus: #2F72C4;
   --background-modifier-form-field:   #1F1F1F;
   --background-modifier-error:        rgba(244, 135, 113, 0.16);
   --background-modifier-success:      rgba(78, 201, 176, 0.16);
@@ -429,20 +425,17 @@ body.theme-dark {
   --titlebar-border-color:       var(--background-modifier-border);
   --vscode-window-control-hover-background: rgba(255, 255, 255, 0.1);
   --ribbon-background:           #181818;
-  --status-bar-background:       #2F72C4;
-  --status-bar-text-color:       #FFFFFF;
+  --status-bar-background:       var(--interactive-accent);
+  --status-bar-text-color:       var(--text-on-accent);
   --status-bar-border-color:     transparent;
 
   /* — Text — */
   --text-normal:        #CCCCCC;
   --text-muted:         #9D9D9D;
   --text-faint:         #6E6E6E;
-  --text-accent:        #4A8AD8;
-  --text-accent-hover:  #6BA3E5;
   --text-error:         #F48771;
   --text-success:       #4EC9B0;
   --text-warning:       #DCDCAA;
-  --text-selection:     rgba(47, 114, 196, 0.30);
   --text-highlight-bg:  rgba(220, 220, 170, 0.22);
 
   /* — Headings — */
@@ -455,10 +448,6 @@ body.theme-dark {
   --inline-title-color: var(--text-normal);
 
   /* — Links — */
-  --link-color:                #4A8AD8;
-  --link-color-hover:          #6BA3E5;
-  --link-external-color:       #4A8AD8;
-  --link-external-color-hover: #C586C0;
   --link-unresolved-color:     #F48771;
   --link-unresolved-opacity:   0.7;
 
@@ -503,10 +492,6 @@ body.theme-dark {
   --callout-import:   197, 134, 192;
 
   /* — Tags — */
-  --tag-color:            #4A8AD8;
-  --tag-color-hover:      #6BA3E5;
-  --tag-background:       rgba(47, 114, 196, 0.18);
-  --tag-background-hover: rgba(47, 114, 196, 0.32);
 
   /* — Tables — */
   --table-border-color:          var(--background-modifier-border);
@@ -525,11 +510,7 @@ body.theme-dark {
   --italic-color:            #CE9178;
 
   /* — Checkbox — */
-  --checkbox-color:              #2F72C4;
-  --checkbox-color-hover:        #4A8AD8;
   --checkbox-border-color:       rgba(255, 255, 255, 0.30);
-  --checkbox-border-color-hover: #4A8AD8;
-  --checkbox-marker-color:       #FFFFFF;
 
   /* — Graph view — */
   --graph-line:             rgba(255, 255, 255, 0.10);
@@ -537,7 +518,6 @@ body.theme-dark {
   --graph-node-tag:         #4EC9B0;
   --graph-node-attachment:  #DCDCAA;
   --graph-node-unresolved:  #5A5A5A;
-  --graph-node-focused:     #4A8AD8;
   --graph-text:             #CCCCCC;
   --graph-fill-tag:         #4EC9B0;
   --graph-fill-attachment:  #DCDCAA;
@@ -550,7 +530,6 @@ body.theme-dark {
   --canvas-edge:        #9D9D9D;
 
   /* — Calendar — */
-  --color-background-today: rgba(47, 114, 196, 0.22);
   --color-dot:              var(--interactive-accent);
 
   /* — Tab — */
@@ -575,11 +554,9 @@ body.theme-dark {
 
   /* — Indentation guides — */
   --indentation-guide-color:        rgba(255, 255, 255, 0.05);
-  --indentation-guide-color-active: rgba(74, 138, 216, 0.45);
 
   /* — Divider — */
   --divider-color:       var(--background-modifier-border);
-  --divider-color-hover: #2F72C4;
 
   /* — Shadows — */
   --shadow-s: 0 1px 2px rgba(0, 0, 0, 0.30);
@@ -587,6 +564,93 @@ body.theme-dark {
   --shadow-l: 0 12px 32px rgba(0, 0, 0, 0.50);
 }
 
+
+/* Accent source: Obsidian's inline HSL values are authoritative only when
+ * the override switch is enabled. Style Settings keeps its color variables
+ * separate, so switching sources never discards either saved preference. */
+body.theme-light,
+body.theme-dark {
+  --interactive-accent: var(--color-accent);
+  /* Older plugins consume raw RGB triplets. Convert Obsidian's inline HSL
+   * channels too, so their translucent accents follow the same source. */
+  --vscode-obsidian-accent-l: tan(atan2(var(--accent-l), 100%));
+  --vscode-obsidian-accent-s: tan(atan2(var(--accent-s), 100%));
+  --vscode-obsidian-accent-a: calc(var(--vscode-obsidian-accent-s) * min(var(--vscode-obsidian-accent-l), 1 - var(--vscode-obsidian-accent-l)));
+  --vscode-obsidian-accent-phase: calc(var(--accent-h) / 30);
+  --vscode-obsidian-accent-r: calc(255 * (var(--vscode-obsidian-accent-l) - var(--vscode-obsidian-accent-a) * max(-1, min(var(--vscode-obsidian-accent-phase) - 3, 9 - var(--vscode-obsidian-accent-phase), 1))));
+  --vscode-obsidian-accent-g: calc(255 * (var(--vscode-obsidian-accent-l) - var(--vscode-obsidian-accent-a) * max(-1, min(var(--vscode-obsidian-accent-phase) + 5, 1 - var(--vscode-obsidian-accent-phase), 1), min(var(--vscode-obsidian-accent-phase) - 7, 13 - var(--vscode-obsidian-accent-phase), 1))));
+  --vscode-obsidian-accent-b: calc(255 * (var(--vscode-obsidian-accent-l) - var(--vscode-obsidian-accent-a) * max(-1, min(var(--vscode-obsidian-accent-phase) + 1, 5 - var(--vscode-obsidian-accent-phase), 1), min(var(--vscode-obsidian-accent-phase) - 11, 17 - var(--vscode-obsidian-accent-phase), 1))));
+  --interactive-accent-rgb: var(--vscode-obsidian-accent-r), var(--vscode-obsidian-accent-g), var(--vscode-obsidian-accent-b);
+  --interactive-accent-hover: color-mix(in srgb, var(--interactive-accent) 94%, var(--vscode-accent-hover-mix));
+  --color-accent-1: var(--interactive-accent-hover);
+  --color-accent-2: var(--interactive-accent-hover);
+  --text-accent: var(--interactive-accent);
+  --text-accent-hover: var(--interactive-accent-hover);
+  --link-color: var(--text-accent);
+  --link-color-hover: var(--text-accent-hover);
+  --link-external-color: var(--text-accent);
+  --link-external-color-hover: var(--text-accent-hover);
+  --background-modifier-border-focus: var(--interactive-accent);
+  --checkbox-color: var(--interactive-accent);
+  --checkbox-color-hover: var(--interactive-accent-hover);
+  --checkbox-border-color-hover: var(--interactive-accent);
+  --checkbox-marker-color: var(--text-on-accent);
+  --divider-color-hover: var(--interactive-accent);
+  --graph-node-focused: var(--text-accent);
+  --tag-color: var(--text-accent);
+  --tag-color-hover: var(--text-accent-hover);
+  --tag-background: color-mix(in srgb, var(--interactive-accent) 10%, transparent);
+  --tag-background-hover: color-mix(in srgb, var(--interactive-accent) 18%, transparent);
+  --color-background-today: color-mix(in srgb, var(--interactive-accent) 12%, transparent);
+  --text-selection: color-mix(in srgb, var(--interactive-accent) 25%, transparent);
+  --indentation-guide-color-active: color-mix(in srgb, var(--interactive-accent) 45%, transparent);
+}
+body.theme-dark {
+  --text-accent: color-mix(in srgb, var(--interactive-accent) 80%, white);
+}
+body.theme-light:not(.vscode-use-obsidian-accent),
+body.theme-dark:not(.vscode-use-obsidian-accent) {
+  --accent-h: var(--vscode-accent-h, var(--vscode-accent-default-h)) !important;
+  --accent-s: var(--vscode-accent-s, var(--vscode-accent-default-s)) !important;
+  --accent-l: var(--vscode-accent-l, var(--vscode-accent-default-l)) !important;
+  --color-accent: var(--vscode-accent, var(--vscode-accent-default));
+  --interactive-accent-rgb: var(--vscode-accent-r, var(--vscode-accent-default-r)), var(--vscode-accent-g, var(--vscode-accent-default-g)), var(--vscode-accent-b, var(--vscode-accent-default-b));
+  --vscode-accent-custom-hover: color-mix(in srgb, var(--vscode-accent) 94%, var(--vscode-accent-hover-mix));
+  --interactive-accent-hover: var(--vscode-accent-custom-hover, var(--vscode-accent-hover-default));
+  /* Older renderers: choose black or white from the theme color's RGB
+   * brightness, instead of retaining Obsidian's unrelated inline foreground. */
+  --vscode-accent-contrast-channel: clamp(0, calc((128 -
+    (var(--vscode-accent-r, var(--vscode-accent-default-r)) * 0.299 +
+     var(--vscode-accent-g, var(--vscode-accent-default-g)) * 0.587 +
+     var(--vscode-accent-b, var(--vscode-accent-default-b)) * 0.114)) * 1000), 255);
+  --text-on-accent: rgb(var(--vscode-accent-contrast-channel), var(--vscode-accent-contrast-channel), var(--vscode-accent-contrast-channel)) !important;
+  --text-on-accent-inverted: rgb(calc(255 - var(--vscode-accent-contrast-channel)), calc(255 - var(--vscode-accent-contrast-channel)), calc(255 - var(--vscode-accent-contrast-channel))) !important;
+}
+/* Relative Lab lightness provides a black/white contrast fallback.
+ * contrast-color() chooses the higher WCAG contrast directly
+ * on newer renderers. Both use the actual background, in either source mode. */
+@supports (color: lab(from red l 0 0)) {
+  body.theme-light,
+  body.theme-dark,
+  body.theme-light:not(.vscode-use-obsidian-accent),
+  body.theme-dark:not(.vscode-use-obsidian-accent),
+  body .mod-cta,
+  body .tree-item-self.is-being-dragged {
+    --text-on-accent: lab(from var(--vscode-accent-surface, var(--interactive-accent)) clamp(0, calc((49.44 - l) * 1000), 100) 0 0) !important;
+    --text-on-accent-inverted: lab(from var(--vscode-accent-surface, var(--interactive-accent)) clamp(0, calc((l - 49.44) * 1000), 100) 0 0) !important;
+  }
+}
+@supports (color: contrast-color(red)) {
+  body.theme-light,
+  body.theme-dark,
+  body.theme-light:not(.vscode-use-obsidian-accent),
+  body.theme-dark:not(.vscode-use-obsidian-accent),
+  body .mod-cta,
+  body .tree-item-self.is-being-dragged {
+    --text-on-accent: contrast-color(var(--vscode-accent-surface, var(--interactive-accent))) !important;
+    --text-on-accent-inverted: contrast-color(var(--text-on-accent)) !important;
+  }
+}
 
 /* ============================================================
  *  Section 4 — Typography & Base Reset
@@ -616,6 +680,16 @@ body {
 .markdown-source-view.mod-cm6 .cm-line,
 .markdown-rendered {
   line-height: var(--line-height-normal);
+}
+
+/* Integrated from hyphenation-and-justification.css.
+ * Author: https://forum.obsidian.md/u/boyd/summary
+ * Source: https://forum.obsidian.md/t/meta-post-common-css-hacks/1978/25
+ * Enable by default even when Style Settings is not installed. */
+body:not(.css-settings-manager) :is(.cm-s-obsidian, .markdown-preview-view),
+body.vscode-hyphenation-justification :is(.cm-s-obsidian, .markdown-preview-view) {
+  text-align: justify;
+  hyphens: auto;
 }
 
 /* Heading sizes & weights */
@@ -849,7 +923,7 @@ body.theme-light.is-translucent :is(.modal, .suggestion-container, .menu, .promp
 /* Search */
 .search-result-file-title { color: var(--text-normal); font-weight: 500; }
 .search-result-file-matched-text {
-  background-color: rgba(var(--interactive-accent-rgb), 0.22);
+  background-color: color-mix(in srgb, var(--interactive-accent) 22%, transparent);
   color: var(--text-normal);
   border-radius: var(--radius-s);
 }
@@ -1375,7 +1449,7 @@ a.tag:hover,
 .canvas-node:hover { box-shadow: var(--shadow-m); }
 .canvas-node.is-focused {
   border-color: var(--interactive-accent);
-  box-shadow: 0 0 0 2px rgba(var(--interactive-accent-rgb), 0.30), var(--shadow-m);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--interactive-accent) 30%, transparent), var(--shadow-m);
 }
 .canvas-node-label { color: var(--text-normal); }
 .canvas-edge { stroke: var(--canvas-edge); }
@@ -1505,6 +1579,7 @@ button.mod-cta:hover,
  * labels and items that remain active or selected while being dragged. */
 body .tree-item-self.is-being-dragged,
 body .mod-cta {
+  --vscode-accent-surface: var(--interactive-accent);
   --nav-item-color: var(--text-on-accent);
   --nav-item-color-hover: var(--text-on-accent);
   --nav-item-color-active: var(--text-on-accent);
@@ -1515,6 +1590,9 @@ body .mod-cta {
   --icon-color: var(--text-on-accent);
   --icon-color-hover: var(--text-on-accent);
   color: var(--text-on-accent);
+}
+body .mod-cta:hover {
+  --vscode-accent-surface: var(--interactive-accent-hover);
 }
 body .tree-item-self.is-being-dragged {
   --nav-item-background-hover: var(--interactive-accent);
@@ -1577,7 +1655,7 @@ body:not(.is-phone) .prompt input.prompt-input {
   color: var(--text-normal);
 }
 .suggestion-highlight {
-  background-color: rgba(var(--interactive-accent-rgb), 0.22);
+  background-color: color-mix(in srgb, var(--interactive-accent) 22%, transparent);
   color: var(--text-normal);
   border-radius: 2px;
   font-weight: 600;

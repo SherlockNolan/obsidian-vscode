@@ -7,7 +7,7 @@
 ## Features
 
 - **Light & Dark mode** — both first-class, follows system color scheme
-- **VS 2026 Fluent UI tokens** — `#005FB8` / `#2F72C4` accent, `#F6F8FC` / `#DDE7FF` Light surfaces, `#1F1F1F` / `#181818` Dark surfaces
+- **Theme accent colors** — `#0069CC` for 2026 Light, `#005FB8` for Light Modern, and `#2F72C4` for this theme's Dark palette; configurable per mode, with optional Obsidian accent override
 - **Complete VSCode Dark+ / Light+ syntax highlighting** — keyword / string / comment / function / variable / type / number / control / regex, double-mapped for both CodeMirror 6 (editor) and Prism.js (reading view)
 - **macOS Tahoe-style polish** — SF Pro / SF Mono system font stack, 8–12 px rounded corners, defocused-window dim, `prefers-reduced-motion` support
 - **Vibrancy / translucency** — sidebar, status bar, command palette and modals get `backdrop-filter` blur when *Translucent window* is enabled
@@ -42,12 +42,17 @@ With **Style Settings** installed, open **Settings → Style Settings → VSCode
 
 Light Modern follows Microsoft's [light_modern.json](https://github.com/microsoft/vscode/blob/main/extensions/theme-defaults/themes/light_modern.json), including its inherited Light+ syntax palette. It retains this theme's black bold text and non-italic code styling.
 
+Under **Settings → Style Settings → VSCode**, **使用 Obsidian 强调色覆写** is off by default. Enable it to use **Appearance → Accent color**; disable it to use **主题强调色（浅色 / 深色）**, which provides separate light and dark color pickers and reset buttons. Neither option changes the saved Obsidian accent color.
+
+Resetting a picker clears its custom color. Light mode then follows the selected preset (`#0069CC` for 2026 Light or `#005FB8` for Light Modern); dark mode returns to `#2F72C4`. Style Settings displays the 2026 Light value as its light default. Custom theme colors are retained while the Obsidian override is enabled. Buttons, focus indicators, checkboxes, links and accent backgrounds share the selected source, and button text contrasts with the actual accent background.
+
+**两端对齐与自动断词** is enabled by default, including without Style Settings. Its switch controls justification and automatic hyphenation in both reading and editing views. The former `hyphenation-and-justification.css` snippet is integrated into the theme; it no longer needs to be enabled separately.
+
 Every color is a CSS variable. Override in a snippet:
 
 ```css
 /* .obsidian/snippets/my-tweaks.css */
 .theme-dark {
-  --interactive-accent: #4EC9B0;       /* swap accent to teal */
   --code-keyword:       #C586C0;       /* purple keywords */
 }
 .theme-light {
@@ -59,7 +64,7 @@ Common variables to tweak:
 
 | Variable | Purpose |
 | --- | --- |
-| `--interactive-accent` | Primary accent color (links, active tab top border, status bar) |
+| `--interactive-accent` | Effective accent color; configure its source and light/dark colors through Style Settings |
 | `--background-primary` / `--background-secondary` | Editor and sidebar backgrounds |
 | `--code-{keyword,string,comment,function,variable,type,number,control}` | Syntax highlight tokens |
 | `--callout-{note,tip,info,success,question,warning,failure,error,bug,example,quote,abstract,todo}` | Callout colors (RGB triplets) |
