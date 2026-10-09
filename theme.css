@@ -398,7 +398,8 @@ settings:
 
 /* ============================================================
  *  Section 3 — Dark Mode Variables
- *  Fluent Dark surfaces + VSCode 2026 syntax tokens
+ *  VS Code 2026 Dark workbench surfaces and syntax tokens
+ *  Source: microsoft/vscode extensions/theme-defaults/themes/2026-dark.json
  * ============================================================ */
 .theme-dark {
   /* — Accent — */
@@ -414,30 +415,34 @@ settings:
   --interactive-accent-background:    #242526;
 
   /* — Backgrounds — */
-  --background-primary:        #1F1F1F;
-  --background-primary-alt:    #181818;
-  --background-secondary:      #181818;
-  --background-secondary-alt:  #2A2D2E;
+  --background-primary:        #121314;
+  --background-primary-alt:    #191A1B;
+  --background-secondary:      #191A1B;
+  --background-secondary-alt:  #202122;
 
-  --background-modifier-hover:        rgba(255, 255, 255, 0.06);
-  --background-modifier-active-hover: rgba(47, 114, 196, 0.22);
-  --background-modifier-border:       rgba(255, 255, 255, 0.08);
-  --background-modifier-border-hover: rgba(255, 255, 255, 0.16);
-  --background-modifier-form-field:   #1F1F1F;
+  --background-modifier-hover:        #FFFFFF14;
+  --background-modifier-active-hover: #FFFFFF22;
+  --background-modifier-border:       #2A2B2C;
+  --background-modifier-border-hover: #333536;
+  --background-modifier-form-field:   #191A1B;
   --background-modifier-error:        rgba(244, 135, 113, 0.16);
   --background-modifier-success:      rgba(78, 201, 176, 0.16);
 
   /* — Chrome — */
-  --titlebar-background:         #181818;
-  --titlebar-background-focused: #181818;
-  --titlebar-text-color:         var(--text-muted);
-  --titlebar-text-color-focused: var(--text-muted);
+  --titlebar-background:         #121314;
+  --titlebar-background-focused: #191A1B;
+  --titlebar-text-color:         #8C8C8C;
+  --titlebar-text-color-focused: #8C8C8C;
   --titlebar-border-color:       var(--background-modifier-border);
   --vscode-window-control-hover-background: rgba(255, 255, 255, 0.1);
-  --ribbon-background:           #181818;
-  --status-bar-background:       var(--interactive-accent);
-  --status-bar-text-color:       var(--text-on-accent);
-  --status-bar-border-color:     transparent;
+  --ribbon-background:           #191A1B;
+  --status-bar-background:       #191A1B;
+  --vscode-status-bar-background-inactive: #121314;
+  --status-bar-text-color:       #8C8C8C;
+  --status-bar-border-color:     #2A2B2C;
+  --vscode-status-bar-hover-background: #323233;
+  --vscode-widget-background:    #202122;
+  --vscode-widget-border:        #2A2B2C;
 
   /* — Text — */
   --text-normal:        #CCCCCC;
@@ -534,8 +539,8 @@ settings:
   --graph-fill-unresolved:  rgba(90, 90, 90, 0.4);
 
   /* — Canvas — */
-  --canvas-background:  #1A1A1A;
-  --canvas-card-bg:     #252526;
+  --canvas-background:  var(--background-primary);
+  --canvas-card-bg:     var(--background-secondary);
   --canvas-card-border: var(--background-modifier-border);
   --canvas-edge:        #9D9D9D;
 
@@ -545,9 +550,9 @@ settings:
   /* — Tab — */
   --tab-background-active:        var(--background-primary);
   --tab-container-background:     var(--background-secondary);
-  --tab-text-color:               var(--text-muted);
-  --tab-text-color-active:        var(--text-normal);
-  --tab-text-color-focused-active: var(--text-normal);
+  --tab-text-color:               #8C8C8C;
+  --tab-text-color-active:        #BFBFBF;
+  --tab-text-color-focused-active: #BFBFBF;
 
   /* — Nav — */
   --nav-item-color:             var(--text-muted);
@@ -751,7 +756,7 @@ body.is-translucent .titlebar {
   backdrop-filter:         saturate(var(--vibrancy-saturation)) blur(var(--vibrancy-blur));
 }
 
-/* Status bar keeps accent color but goes vibrant */
+/* Status bar uses its own surface when translucency is enabled. */
 body.is-translucent .status-bar {
   background-color: color-mix(in srgb, var(--status-bar-background) 88%, transparent);
 }
@@ -793,7 +798,7 @@ body.is-translucent .prompt {
   border-bottom: 0.5px solid var(--titlebar-border-color);
 }
 .titlebar .titlebar-text { color: var(--titlebar-text-color); font-size: var(--font-ui-small); }
-body.theme-light .titlebar .titlebar-text { opacity: 1; }
+body:is(.theme-light, .theme-dark) .titlebar .titlebar-text { opacity: 1; }
 body.is-focused .titlebar .titlebar-text {
   color: var(--titlebar-text-color-focused);
 }
@@ -820,14 +825,26 @@ body.is-focused .titlebar-button-container.mod-right .titlebar-button {
   }
 }
 
-/* Preserve the official light surfaces when translucency is enabled. */
-body.theme-light.is-translucent :is(.titlebar, .workspace-ribbon,
+/* Preserve official workbench surfaces when translucency is enabled. */
+body:is(.theme-light, .theme-dark).is-translucent :is(.titlebar, .workspace-ribbon,
     .workspace-tab-header-container, .workspace-split.mod-left-split,
     .workspace-split.mod-right-split, .status-bar) {
   background-color: var(--background-secondary);
 }
-body.theme-light.is-translucent :is(.modal, .suggestion-container, .menu, .prompt) {
+body:is(.theme-light, .theme-dark).is-translucent :is(.modal, .suggestion-container, .menu, .prompt) {
   background-color: var(--vscode-widget-background);
+}
+body.theme-dark.is-translucent:not(.is-focused) .titlebar {
+  background-color: var(--titlebar-background);
+}
+/* Hidden titlebars share the tab row; keep its surface independent of focus. */
+body.theme-dark .workspace-tabs.mod-top {
+  --tab-container-background: var(--background-secondary);
+  --sidebar-tab-container-background: var(--background-secondary);
+}
+body.theme-dark:not(.is-focused) .status-bar,
+body.theme-dark.is-translucent:not(.is-focused) .status-bar {
+  background-color: var(--vscode-status-bar-background-inactive);
 }
 
 /* Ribbon (left activity bar) */
@@ -1969,8 +1986,7 @@ body:not(.is-phone) .prompt input.prompt-input {
               border-color     var(--anim-duration-default) var(--anim-motion-smooth);
 }
 
-body:not(.is-focused) .titlebar { opacity: 0.85; }
-body.theme-light:not(.is-focused) .titlebar { opacity: 1; }
+body:not(.is-focused) .titlebar { opacity: 1; }
 body:not(.is-focused) .workspace-tab-header.is-active { border-top-color: var(--background-modifier-border); }
 
 /* Reduced motion — respect macOS Accessibility setting */

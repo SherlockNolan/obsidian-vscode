@@ -6,7 +6,7 @@
 
 ## Features
 
-- **Light & Dark mode** — both first-class, follows system color scheme
+- **Light & Dark mode** — follows system color scheme; 2026 Dark uses `#121314` editor backgrounds, `#191A1B` sidebar/window surfaces and `#202122` menus/widgets
 - **Theme accent colors** — `#0069CC` for 2026 Light, `#005FB8` for Light Modern, and `#2F72C4` for this theme's Dark palette; configurable per mode, with optional Obsidian accent override
 - **VSCode syntax highlighting** — 2026 Light/Dark colors and optional Light Modern colors; the local **VSCode Code Scroll** companion supplies matching Prism token classification in Live Preview and Reading view
 - **macOS Tahoe-style polish** — SF Pro / SF Mono system font stack, 8–12 px rounded corners, defocused-window dim, `prefers-reduced-motion` support
@@ -39,6 +39,8 @@
 ## Customization
 
 With **Style Settings** installed, open **Settings → Style Settings → VSCode → 浅色配色** to choose **VS Code 2026 Light** (default) or **VS Code Light Modern**. The preset changes light-mode interface colors and both editor and reading-view syntax colors. Dark mode keeps its existing palette. Monospace fonts, code sizes, Markdown layout and scrolling are independent of the preset.
+
+Dark window surfaces follow Microsoft's [2026-dark.json](https://github.com/microsoft/vscode/blob/main/extensions/theme-defaults/themes/2026-dark.json). Editing and reading areas use `#121314`; sidebars, the activity bar, tab strip and active title/status bars use `#191A1B`. Inactive title/status bars use `#121314`; menus and widgets use `#202122`, with `#2A2B2C` separators. These surfaces stay opaque when translucency is enabled, preserving the official contrast between the editor and surrounding panels.
 
 Light Modern follows Microsoft's [light_modern.json](https://github.com/microsoft/vscode/blob/main/extensions/theme-defaults/themes/light_modern.json), including its inherited Light+ syntax palette. It retains this theme's black bold text and non-italic code styling.
 
