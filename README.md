@@ -56,7 +56,9 @@ Keep the local **VSCode Code Scroll** plugin enabled for matching editable code 
 
 **代码块行号** is also off by default. Enable it in the same section to number original code lines in both views and PDF, starting at 1 for each block. Blank lines are counted; visual continuations have no extra number. Numbers stay in the left gutter during horizontal scrolling and are excluded from copied code. Keep **VSCode Code Scroll** enabled for the line wrappers and editable-line numbers.
 
-In `theme.css`, `--vscode-code-flair-top` (default `0px`) and `--vscode-code-flair-right` (`12px`) position the Live Preview language/copy label. Lower top values move it up. `--vscode-code-wrap-marker-inset` (`12px`) controls the Live Preview return-arrow inset from the right edge.
+In `theme.css`, `--vscode-code-flair-top` and `--vscode-code-flair-right` position the Live Preview language/copy label. Lower top values move it up. `--vscode-code-wrap-marker-inset` (`12px`) controls the Live Preview return-arrow inset from the right edge. The label centers both language text and the copy/confirmation icon.
+
+Line numbers use the quieter `--vscode-code-line-number-color`. In the editor, the cursor line uses `--vscode-code-active-line-background` and its number uses `--vscode-code-active-line-number-color`; the gutter shares the active row background, including while scrolling or wrapping. All three colors follow the current light/dark palette without changing syntax colors.
 
 Every color is a CSS variable. Override in a snippet:
 
