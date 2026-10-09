@@ -740,9 +740,34 @@ body.is-translucent .prompt {
 .markdown-rendered pre,
 .markdown-source-view.mod-cm6 .HyperMD-codeblock-bg {
   background-color: var(--code-background);
+}
+
+/* Reading view: `pre` is one container, so its border can be applied once. */
+.markdown-rendered pre {
   border: 1px solid var(--background-modifier-border);
   border-radius: var(--radius-m);
   box-shadow: var(--shadow-s);
+}
+
+/* Live Preview: Obsidian renders a fenced block as separate `.cm-line`s.
+ * Keep only the side borders on the middle lines, then close the shape on
+ * the first and last lines so every line does not become its own box. */
+body .markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock-bg {
+  border-left: 1px solid var(--background-modifier-border);
+  border-right: 1px solid var(--background-modifier-border);
+  border-radius: 0;
+}
+
+body .markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock-begin-bg {
+  border-top: 1px solid var(--background-modifier-border);
+  border-top-left-radius: var(--radius-m);
+  border-top-right-radius: var(--radius-m);
+}
+
+body .markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock-end-bg {
+  border-bottom: 1px solid var(--background-modifier-border);
+  border-bottom-left-radius: var(--radius-m);
+  border-bottom-right-radius: var(--radius-m);
 }
 .markdown-rendered pre {
   padding: 14px 16px;

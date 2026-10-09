@@ -1,4 +1,4 @@
-# VSCode 2026 — Obsidian Theme
+# VSCode — Obsidian Theme
 
 > A faithful port of Microsoft Visual Studio 2026's Fluent visual language to Obsidian, with first-class macOS vibrancy support.
 
