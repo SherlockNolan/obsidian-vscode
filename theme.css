@@ -73,45 +73,53 @@
 
 /* ============================================================
  *  Section 2 — Light Mode Variables
- *  VS 2026 Fluent Light + VSCode 2026 syntax tokens
+ *  VS Code 2026 Light workbench and syntax colors
  * ============================================================ */
 .theme-light {
   /* — Accent / interactive — */
-  --interactive-accent:        #005FB8;
-  --interactive-accent-hover:  #1A6FBE;
-  --interactive-accent-rgb:    0, 95, 184;
-  --interactive-accent-background:    #FAFAFA;
+  --interactive-accent:        #0069CC;
+  --interactive-accent-hover:  #0063C1;
+  --interactive-accent-rgb:    0, 105, 204;
+  --interactive-accent-background:    #FAFAFD;
   --text-on-accent:            #FFFFFF;
 
   /* — Backgrounds — */
   --background-primary:        #FFFFFF;
-  --background-primary-alt:    #F6F8FC;
-  --background-secondary:      #F6F8FC;
-  --background-secondary-alt:  #DDE7FF;
+  --background-primary-alt:    #FAFAFD;
+  --background-secondary:      #FAFAFD;
+  --background-secondary-alt:  #FAFAFD;
 
-  --background-modifier-hover:        rgba(0, 95, 184, 0.08);
-  --background-modifier-active-hover: rgba(0, 95, 184, 0.14);
-  --background-modifier-border:        rgba(149, 164, 191, 0.45);
-  --background-modifier-border-hover:  rgba(149, 164, 191, 0.7);
-  --background-modifier-border-focus:  #005FB8;
+  --background-modifier-hover:        #00000014;
+  --background-modifier-active-hover: #00000025;
+  --background-modifier-border:        #F0F1F2;
+  --background-modifier-border-hover:  #D8D8D8;
+  --background-modifier-border-focus:  #0069CC;
   --background-modifier-form-field:    #FFFFFF;
   --background-modifier-error:         rgba(209, 52, 56, 0.12);
   --background-modifier-success:       rgba(22, 130, 93, 0.12);
 
   /* — Chrome — */
-  --titlebar-background:         #DDE7FF;
-  --titlebar-background-focused: #DDE7FF;
-  --ribbon-background:           #F6F8FC;
-  --status-bar-background:       #005FB8;
-  --status-bar-text-color:       #FFFFFF;
-  --status-bar-border-color:     transparent;
+  --titlebar-background:         #FAFAFD;
+  --titlebar-background-focused: #FAFAFD;
+  --titlebar-text-color:         #606060;
+  --titlebar-text-color-focused: #606060;
+  --titlebar-border-color:       #F0F1F2;
+  --vscode-window-control-hover-background: rgba(0, 0, 0, 0.1);
+  --vscode-widget-background:    #FAFAFD;
+  --vscode-widget-border:        #E4E5E6;
+  --vscode-tab-active-border:    #000000;
+  --vscode-status-bar-hover-background: #E3E3E5;
+  --ribbon-background:           #FAFAFD;
+  --status-bar-background:       #FAFAFD;
+  --status-bar-text-color:       #606060;
+  --status-bar-border-color:     #F0F1F2;
 
   /* — Text — */
-  --text-normal:        #1F1F1F;
-  --text-muted:         #5A5A5A;
-  --text-faint:         #8A8A8A;
-  --text-accent:        #005FB8;
-  --text-accent-hover:  #1A6FBE;
+  --text-normal:        #202020;
+  --text-muted:         #606060;
+  --text-faint:         #999999;
+  --text-accent:        #0069CC;
+  --text-accent-hover:  #0063C1;
   --text-error:         #D13438;
   --text-success:       #16825D;
   --text-warning:       #BC7500;
@@ -122,7 +130,7 @@
   --h1-color: #1F1F1F;
   --h2-color: #1F1F1F;
   --h3-color: #005FB8;
-  --h4-color: #267F99;
+  --h4-color: #005FB8;
   --h5-color: #795E26;
   --h6-color: #5A5A5A;
   --inline-title-color: var(--text-normal);
@@ -300,6 +308,10 @@
   /* — Chrome — */
   --titlebar-background:         #181818;
   --titlebar-background-focused: #181818;
+  --titlebar-text-color:         var(--text-muted);
+  --titlebar-text-color-focused: var(--text-muted);
+  --titlebar-border-color:       var(--background-modifier-border);
+  --vscode-window-control-hover-background: rgba(255, 255, 255, 0.1);
   --ribbon-background:           #181818;
   --status-bar-background:       #2F72C4;
   --status-bar-text-color:       #FFFFFF;
@@ -321,7 +333,7 @@
   --h1-color: #D4D4D4;
   --h2-color: #D4D4D4;
   --h3-color: #569CD6;
-  --h4-color: #4EC9B0;
+  --h4-color: rgb(101, 184, 252);
   --h5-color: #DCDCAA;
   --h6-color: #9D9D9D;
   --inline-title-color: var(--text-normal);
@@ -471,6 +483,13 @@ body {
   --h2-size:                 1.5em;
   --hr-thickness:            1px;
   --hr-color:                var(--markdown-rule-color);
+  /* VS Code's window-close hover color comes from titlebarpart.css. */
+  --vscode-window-close-hover-background: rgba(232, 17, 35, 0.9);
+  --vscode-window-close-hover-foreground: #FFFFFF;
+  --vscode-widget-background: var(--background-primary);
+  --vscode-widget-border:     var(--background-modifier-border);
+  --vscode-tab-active-border: var(--interactive-accent);
+  --vscode-status-bar-hover-background: rgba(255, 255, 255, 0.12);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-feature-settings: "ss01", "cv01", "cv09", "cv11";
@@ -570,9 +589,45 @@ body.is-translucent .prompt {
 /* Titlebar */
 .titlebar {
   background-color: var(--titlebar-background);
-  border-bottom: 0.5px solid var(--background-modifier-border);
+  border-bottom: 0.5px solid var(--titlebar-border-color);
 }
-.titlebar .titlebar-text { color: var(--text-muted); font-size: var(--font-ui-small); }
+.titlebar .titlebar-text { color: var(--titlebar-text-color); font-size: var(--font-ui-small); }
+body.theme-light .titlebar .titlebar-text { opacity: 1; }
+body.is-focused .titlebar .titlebar-text {
+  color: var(--titlebar-text-color-focused);
+}
+
+/* Window controls inherit the same foreground as VS Code's titlebar.
+ * Keep the close hover independent of Obsidian's generic error backgrounds. */
+body .titlebar-button-container.mod-right .titlebar-button {
+  color: var(--titlebar-text-color);
+}
+body.is-focused .titlebar-button-container.mod-right .titlebar-button {
+  color: var(--titlebar-text-color-focused);
+}
+@media (hover: hover) {
+  body .titlebar-button-container.mod-right .titlebar-button:hover {
+    background-color: var(--vscode-window-control-hover-background);
+  }
+  body .titlebar-button-container.mod-right .titlebar-button.mod-close:hover {
+    background-color: var(--vscode-window-close-hover-background);
+    color: var(--vscode-window-close-hover-foreground);
+  }
+  body .titlebar-button-container.mod-right .titlebar-button.mod-close:hover .svg-icon {
+    fill: var(--vscode-window-close-hover-foreground);
+    stroke: var(--vscode-window-close-hover-foreground);
+  }
+}
+
+/* Preserve the official light surfaces when translucency is enabled. */
+body.theme-light.is-translucent :is(.titlebar, .workspace-ribbon,
+    .workspace-tab-header-container, .workspace-split.mod-left-split,
+    .workspace-split.mod-right-split, .status-bar) {
+  background-color: var(--background-secondary);
+}
+body.theme-light.is-translucent :is(.modal, .suggestion-container, .menu, .prompt) {
+  background-color: var(--vscode-widget-background);
+}
 
 /* Ribbon (left activity bar) */
 .workspace-ribbon {
@@ -603,7 +658,7 @@ body.is-translucent .prompt {
 }
 .status-bar .status-bar-item { color: var(--status-bar-text-color); }
 .status-bar .status-bar-item-icon { opacity: 0.9; }
-.status-bar .status-bar-item:hover { background-color: rgba(255, 255, 255, 0.12); }
+.status-bar .status-bar-item:hover { background-color: var(--vscode-status-bar-hover-background); }
 
 /* Tabs */
 .workspace-tab-header-container {
@@ -619,7 +674,7 @@ body.is-translucent .prompt {
 .workspace-tab-header:not(.is-active):hover { background-color: var(--background-modifier-hover); }
 .workspace-tab-header.is-active {
   background-color: var(--tab-background-active);
-  border-top: 1px solid var(--interactive-accent);
+  border-top: 1px solid var(--vscode-tab-active-border);
 }
 .workspace-tab-header-inner-title { color: var(--tab-text-color); }
 .workspace-tab-header.is-active .workspace-tab-header-inner-title { color: var(--tab-text-color-active); }
@@ -1209,9 +1264,9 @@ a.tag:hover,
  *  Section 15 — Settings Modal & Command Palette
  * ============================================================ */
 .modal {
-  background-color: var(--background-primary);
+  background-color: var(--vscode-widget-background);
   border-radius: var(--modal-radius);
-  border: 0.5px solid var(--background-modifier-border);
+  border: 0.5px solid var(--vscode-widget-border);
   box-shadow: var(--shadow-l);
 }
 .modal-title { color: var(--text-normal); font-weight: 600; }
@@ -1254,8 +1309,27 @@ a.tag:hover,
 
 /* Settings section headings share the H2 rule, without restoring row cards. */
 .mod-settings .setting-item.setting-item-heading {
-  padding-bottom: 0.3em;
-  border-bottom: 1px solid var(--markdown-rule-color) !important;
+  position: relative;
+  padding-bottom: 10px; /* 标题到分割线的距离 */
+  margin-bottom: 16px; /* 分割线下方的留白 */
+  border-bottom: none !important;
+}
+
+/* Start the rule at the title's content edge, inside the heading's padding.
+ * Use ::before so Obsidian's ::after keyboard-focus outline stays intact. */
+.mod-settings .setting-item.setting-item-heading::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  inset-inline-start: var(--size-4-4);
+  inset-inline-end: var(--size-4-4);
+  border-bottom: 1px solid var(--markdown-rule-color);
+  pointer-events: none;
+}
+
+/* Top-level Style Settings titles have a 9px collapse icon and an 8px gap. */
+.mod-settings .setting-item.setting-item-heading.style-settings-heading[data-level="0"]::before {
+  inset-inline-start: calc(var(--size-4-4) + 17px);
 }
 
 /* Inputs / buttons */
@@ -1306,9 +1380,9 @@ button.mod-cta:hover,
 
 /* Command palette / Quick switcher */
 .prompt {
-  background-color: var(--background-primary);
+  background-color: var(--vscode-widget-background);
   border-radius: var(--modal-radius);
-  border: 0.5px solid var(--background-modifier-border);
+  border: 0.5px solid var(--vscode-widget-border);
   box-shadow: var(--shadow-l);
 }
 .prompt-input {
@@ -1339,8 +1413,8 @@ button.mod-cta:hover,
   font-weight: 600;
 }
 .menu {
-  background-color: var(--background-primary);
-  border: 0.5px solid var(--background-modifier-border);
+  background-color: var(--vscode-widget-background);
+  border: 0.5px solid var(--vscode-widget-border);
   border-radius: var(--radius-m);
   box-shadow: var(--shadow-l);
   padding: 4px;
@@ -1428,6 +1502,7 @@ button.mod-cta:hover,
 }
 
 body:not(.is-focused) .titlebar { opacity: 0.85; }
+body.theme-light:not(.is-focused) .titlebar { opacity: 1; }
 body:not(.is-focused) .workspace-tab-header.is-active { border-top-color: var(--background-modifier-border); }
 
 /* Reduced motion — respect macOS Accessibility setting */
