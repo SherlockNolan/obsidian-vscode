@@ -38,6 +38,10 @@
 
 ## Customization
 
+With **Style Settings** installed, open **Settings → Style Settings → VSCode → 浅色配色** to choose **VS Code 2026 Light** (default) or **VS Code Light Modern**. The preset changes light-mode interface colors and both editor and reading-view syntax colors. Dark mode keeps its existing palette. Monospace fonts, code sizes, Markdown layout and scrolling are independent of the preset.
+
+Light Modern follows Microsoft's [light_modern.json](https://github.com/microsoft/vscode/blob/main/extensions/theme-defaults/themes/light_modern.json), including its inherited Light+ syntax palette. It retains this theme's black bold text and non-italic code styling.
+
 Every color is a CSS variable. Override in a snippet:
 
 ```css

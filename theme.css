@@ -26,6 +26,23 @@
  *  18  Animations & Focus States
  * ============================================================ */
 
+/* @settings
+name: VSCode
+id: vscode-theme
+settings:
+  - id: vscode-light-palette
+    title: 浅色配色
+    description: 切换浅色界面与代码高亮配色；深色模式保持当前配色。
+    type: class-select
+    allowEmpty: false
+    default: vscode-light-2026
+    options:
+      - label: VS Code 2026 Light
+        value: vscode-light-2026
+      - label: VS Code Light Modern
+        value: vscode-light-modern
+*/
+
 
 /* ============================================================
  *  Section 1 — Root Variables (shared)
@@ -75,13 +92,20 @@
  *  Section 2 — Light Mode Variables
  *  VS Code 2026 Light workbench and syntax colors
  * ============================================================ */
+/* Obsidian writes an inline foreground based on the custom accent color.
+ * This theme supplies its own blue backgrounds, so keep their foreground
+ * white even when the saved custom accent would choose black text. */
+body.theme-light,
+body.theme-dark {
+  --text-on-accent: #FFFFFF !important;
+}
+
 .theme-light {
   /* — Accent / interactive — */
   --interactive-accent:        #0069CC;
   --interactive-accent-hover:  #0063C1;
   --interactive-accent-rgb:    0, 105, 204;
   --interactive-accent-background:    #FAFAFD;
-  --text-on-accent:            #FFFFFF;
 
   /* — Backgrounds — */
   --background-primary:        #FFFFFF;
@@ -254,7 +278,8 @@
   /* — Nav — */
   --nav-item-color:               var(--text-muted);
   --nav-item-color-hover:         var(--text-normal);
-  --nav-item-color-active:        var(--interactive-accent);
+  --nav-item-color-active:        var(--text-normal);
+  --nav-item-color-selected:      var(--nav-item-color-active);
   --nav-item-background-hover:    var(--background-modifier-hover);
   --nav-item-background-active:   var(--background-modifier-active-hover);
 
@@ -278,6 +303,98 @@
 }
 
 
+/* Optional light preset selected by Style Settings. Sources:
+ * microsoft/vscode extensions/theme-defaults/themes/light_modern.json,
+ * with syntax colors inherited from light_plus.json and light_vs.json.
+ * Keep typography, Markdown separators and code scrolling independent. */
+.theme-light.vscode-light-modern {
+  --interactive-accent: #005FB8;
+  --interactive-accent-hover: #0258A8;
+  --interactive-accent-rgb: 0, 95, 184;
+  --interactive-accent-background: #F8F8F8;
+  --background-primary: #FFFFFF;
+  --background-primary-alt: #F8F8F8;
+  --background-secondary: #F8F8F8;
+  --background-secondary-alt: #F8F8F8;
+  --background-modifier-hover: #F2F2F2;
+  --background-modifier-active-hover: #E8E8E8;
+  --background-modifier-border: #E5E5E5;
+  --background-modifier-border-hover: #CECECE;
+  --background-modifier-border-focus: #005FB8;
+  --background-modifier-form-field: #FFFFFF;
+
+  --titlebar-background: #F8F8F8;
+  --titlebar-background-focused: #F8F8F8;
+  --titlebar-text-color: #8B949E;
+  --titlebar-text-color-focused: #1E1E1E;
+  --titlebar-border-color: #E5E5E5;
+  --ribbon-background: #F8F8F8;
+  --status-bar-background: #F8F8F8;
+  --status-bar-text-color: #3B3B3B;
+  --status-bar-border-color: #E5E5E5;
+  --vscode-widget-background: #F8F8F8;
+  --vscode-widget-border: #E5E5E5;
+  --vscode-tab-active-border: #005FB8;
+  --vscode-status-bar-hover-background: #1F1F1F11;
+
+  --text-normal: #3B3B3B;
+  --text-muted: #616161;
+  --text-faint: #767676;
+  --text-accent: #005FB8;
+  --text-accent-hover: #005FB8;
+  --text-error: #F85149;
+  --text-success: #2EA043;
+  --text-selection: #ADD6FF80;
+  --setting-group-heading-color: #1F1F1F;
+  --link-color: #005FB8;
+  --link-color-hover: #005FB8;
+  --link-external-color: #005FB8;
+  --link-external-color-hover: #005FB8;
+  --link-unresolved-color: #F85149;
+  --tab-text-color: #616161;
+  --tab-text-color-active: #3B3B3B;
+  --tab-text-color-focused-active: #3B3B3B;
+  --nav-item-color-active: #000000;
+
+  /* Light Modern uses Light+ syntax colors, rather than the 2026 palette. */
+  --code-background: #F8F8F8;
+  --code-normal: #3B3B3B;
+  --code-keyword: #0000FF;
+  --code-string: #A31515;
+  --code-comment: #008000;
+  --code-function: #795E26;
+  --code-variable: #001080;
+  --code-property: #001080;
+  --code-type: #267F99;
+  --code-json-property: #0451A5;
+  --code-tag: #800000;
+  --code-attribute: #E50000;
+  --code-number: #098658;
+  --code-operator: #000000;
+  --code-punctuation: #3B3B3B;
+  --code-control: #AF00DB;
+  --code-builtin: #267F99;
+  --code-regex: #811F3F;
+  --code-important: #AF00DB;
+  --code-invalid: #CD3131;
+  --code-inserted: #098658;
+  --code-deleted: #A31515;
+
+  --blockquote-border-color: #E5E5E5;
+  --blockquote-color: #3B3B3B;
+  --checkbox-color: #005FB8;
+  --checkbox-color-hover: #0258A8;
+  --checkbox-border-color: #CECECE;
+  --checkbox-border-color-hover: #005FB8;
+  --divider-color-hover: #005FB8;
+  --indentation-guide-color: #D3D3D3;
+  --indentation-guide-color-active: #939393;
+  --canvas-background: #F8F8F8;
+  --canvas-card-bg: #FFFFFF;
+  --canvas-edge: #616161;
+}
+
+
 /* ============================================================
  *  Section 3 — Dark Mode Variables
  *  Fluent Dark surfaces + VSCode 2026 syntax tokens
@@ -288,7 +405,6 @@
   --interactive-accent-hover:  #4A8AD8;
   --interactive-accent-rgb:    47, 114, 196;
   --interactive-accent-background:    #242526;
-  --text-on-accent:            #FFFFFF;
 
   /* — Backgrounds — */
   --background-primary:        #1F1F1F;
@@ -448,6 +564,7 @@
   --nav-item-color:             var(--text-muted);
   --nav-item-color-hover:       #FFFFFF;
   --nav-item-color-active:      #FFFFFF;
+  --nav-item-color-selected:    var(--nav-item-color-active);
   --nav-item-background-hover:  var(--background-modifier-hover);
   --nav-item-background-active: var(--background-modifier-active-hover);
 
@@ -723,6 +840,10 @@ body.theme-light.is-translucent :is(.modal, .suggestion-container, .menu, .promp
 .outline .tree-item-self:hover {
   color: var(--text-normal);
   background-color: var(--background-modifier-hover);
+}
+.outline .tree-item-self.is-active,
+.outline .tree-item-self.is-selected {
+  color: var(--nav-item-color-active);
 }
 
 /* Search */
@@ -1288,7 +1409,7 @@ a.tag:hover,
   background-color: var(--background-modifier-hover);
 }
 .vertical-tab-nav-item.is-active {
-  color: var(--interactive-accent);
+  color: var(--nav-item-color-active);
   background-color: var(--background-modifier-active-hover);
   font-weight: 500;
 }
@@ -1348,12 +1469,14 @@ textarea,
   transition: border-color var(--anim-duration-fast) var(--anim-motion-smooth),
               box-shadow var(--anim-duration-fast) var(--anim-motion-smooth);
 }
-input:focus,
-textarea:focus,
-.dropdown:focus {
+/* Use the existing 1px border for focus, without Obsidian's outer ring.
+ * Match the native typed-input selectors so their focus shadow cannot win. */
+input:is([type="text"], [type="search"], [type="email"], [type="password"], [type="number"]):is(:focus, :focus-visible, :active),
+textarea:is(:focus, :focus-visible, :active),
+.dropdown:is(:focus, :focus-visible, :active) {
   outline: none;
   border-color: var(--interactive-accent);
-  box-shadow: 0 0 0 3px rgba(var(--interactive-accent-rgb), 0.20);
+  box-shadow: none;
 }
 
 /* Keep native select text clear of Obsidian's right-side dropdown arrows. */
@@ -1378,6 +1501,31 @@ button.mod-cta,
 button.mod-cta:hover,
 .mod-cta:hover { background-color: var(--interactive-accent-hover); }
 
+/* Solid accent surfaces need their own foreground, including nested tree
+ * labels and items that remain active or selected while being dragged. */
+body .tree-item-self.is-being-dragged,
+body .mod-cta {
+  --nav-item-color: var(--text-on-accent);
+  --nav-item-color-hover: var(--text-on-accent);
+  --nav-item-color-active: var(--text-on-accent);
+  --nav-item-color-selected: var(--text-on-accent);
+  --nav-item-background-hover: var(--interactive-accent-hover);
+  --nav-item-background-active: var(--interactive-accent);
+  --nav-item-background-selected: var(--interactive-accent);
+  --icon-color: var(--text-on-accent);
+  --icon-color-hover: var(--text-on-accent);
+  color: var(--text-on-accent);
+}
+body .tree-item-self.is-being-dragged {
+  --nav-item-background-hover: var(--interactive-accent);
+  background-color: var(--interactive-accent);
+}
+body :is(.tree-item-self.is-being-dragged, .mod-cta)
+  :is(.tree-item-inner, .nav-file-title-content, .nav-folder-title-content,
+      .tree-item-flair, .tree-item-icon, .collapse-icon, .svg-icon) {
+  color: var(--text-on-accent);
+}
+
 /* Command palette / Quick switcher */
 .prompt {
   background-color: var(--vscode-widget-background);
@@ -1386,15 +1534,37 @@ button.mod-cta:hover,
   box-shadow: var(--shadow-l);
 }
 .prompt-input {
-  background-color: transparent;
-  border: none;
-  border-bottom: 1px solid var(--background-modifier-border);
-  border-radius: 0;
   font-size: var(--font-ui-large);
   padding: 14px 16px;
 }
-.prompt-input:focus {
-  border-color: var(--background-modifier-border);
+
+/* Match the input surface to the prompt's inner corners and indicate focus
+ * with only its bottom separator. Phone prompts use a separate, pill-shaped
+ * input at the bottom of the panel. */
+body:not(.is-phone) .prompt .prompt-input-container {
+  /* Only the results list should shrink when the prompt reaches max-height. */
+  flex: 0 0 auto;
+  width: 100%;
+  min-width: 0;
+  border-radius: max(0px, calc(var(--modal-radius) - 1px))
+                 max(0px, calc(var(--modal-radius) - 1px)) 0 0;
+  corner-shape: inherit;
+  background-color: var(--background-modifier-form-field);
+  border-bottom: 1px solid var(--background-modifier-border);
+  overflow: hidden;
+  box-shadow: none;
+}
+body:not(.is-phone) .prompt .prompt-input-container:focus-within {
+  border-bottom-color: var(--interactive-accent);
+}
+body:not(.is-phone) .prompt input.prompt-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  background-color: transparent;
+  border: none;
+  border-radius: inherit;
+  corner-shape: inherit;
+  outline: none;
   box-shadow: none;
 }
 .suggestion-item {
