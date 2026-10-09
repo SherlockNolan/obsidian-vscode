@@ -73,7 +73,7 @@
 
 /* ============================================================
  *  Section 2 — Light Mode Variables
- *  VS 2026 Fluent Light + VSCode Light+ syntax tokens
+ *  VS 2026 Fluent Light + VSCode 2026 syntax tokens
  * ============================================================ */
 .theme-light {
   /* — Accent / interactive — */
@@ -135,25 +135,29 @@
   --link-unresolved-color:     #D13438;
   --link-unresolved-opacity:   0.7;
 
-  /* — Code (Light+) — */
-  --code-background:   #F3F3F3;
-  --code-normal:       #1F1F1F;
-  --code-keyword:      #0000FF;
-  --code-string:       #A31515;
-  --code-comment:      #008000;
-  --code-function:     #795E26;
-  --code-variable:     #001080;
-  --code-property:     #001080;
-  --code-type:         #267F99;
-  --code-tag:          #800000;
-  --code-attribute:    #E50000;
-  --code-number:       #098658;
-  --code-operator:     #1F1F1F;
-  --code-punctuation:  #1F1F1F;
-  --code-control:      #AF00DB;
-  --code-builtin:      #267F99;
-  --code-regex:        #811F3F;
-  --code-important:    #AF00DB;
+  /* — Code (VS Code 2026 Light) — */
+  --code-background:   #EAEAEA;
+  --code-normal:       #202020;
+  --code-keyword:      #CF222E;
+  --code-string:       #0A3069;
+  --code-comment:      #6E7781;
+  --code-function:     #8250DF;
+  --code-variable:     #953800;
+  --code-property:     #1F2328;
+  --code-type:         #953800;
+  --code-json-property: #116329;
+  --code-tag:          #116329;
+  --code-attribute:    #1F2328;
+  --code-number:       #0550AE;
+  --code-operator:     #CF222E;
+  --code-punctuation:  #202020;
+  --code-control:      #CF222E;
+  --code-builtin:      #0550AE;
+  --code-regex:        #0A3069;
+  --code-important:    #CF222E;
+  --code-invalid:      #82071E;
+  --code-inserted:     #116329;
+  --code-deleted:      #82071E;
 
   /* — Callouts (RGB triplets, consumed via rgba()) — */
   --callout-note:     0, 95, 184;
@@ -183,16 +187,19 @@
   --tag-padding-y:   1px;
 
   /* — Tables — */
-  --table-border-color:      var(--background-modifier-border);
-  --table-header-background: #F6F8FC;
-  --table-header-color:      var(--text-normal);
-  --table-row-alt-background: #FAFBFD;
-  --table-row-hover-background: rgba(0, 95, 184, 0.05);
+  --table-border-color:          var(--background-modifier-border);
+  --table-header-border-color:   rgba(0, 0, 0, 0.69);
+  --table-row-border-color:      rgba(0, 0, 0, 0.18);
+  --table-header-background:     transparent;
+  --table-header-color:          var(--text-normal);
+  --table-row-alt-background:    transparent;
+  --table-row-hover-background:  transparent;
 
   /* — Blockquote — */
   --blockquote-border-color: rgba(149, 164, 191, 0.7);
   --blockquote-color:        #5A5A5A;
-  --bold-color:              #005FB8;
+  --bold-color:              #000000;
+  --markdown-rule-color:     rgba(0, 0, 0, 0.18);
   --italic-color:            #795E26;
 
   /* — Checkbox — */
@@ -265,7 +272,7 @@
 
 /* ============================================================
  *  Section 3 — Dark Mode Variables
- *  Fluent Dark surfaces + VSCode Dark+ syntax tokens
+ *  Fluent Dark surfaces + VSCode 2026 syntax tokens
  * ============================================================ */
 .theme-dark {
   /* — Accent — */
@@ -327,25 +334,29 @@
   --link-unresolved-color:     #F48771;
   --link-unresolved-opacity:   0.7;
 
-  /* — Code (Dark+) — */
-  --code-background:   #1E1E1E;
-  --code-normal:       #D4D4D4;
-  --code-keyword:      #569CD6;
-  --code-string:       #CE9178;
-  --code-comment:      #6A9955;
-  --code-function:     #DCDCAA;
-  --code-variable:     #9CDCFE;
-  --code-property:     #9CDCFE;
-  --code-type:         #4EC9B0;
-  --code-tag:          #569CD6;
-  --code-attribute:    #9CDCFE;
-  --code-number:       #B5CEA8;
-  --code-operator:     #D4D4D4;
-  --code-punctuation:  #D4D4D4;
-  --code-control:      #C586C0;
-  --code-builtin:      #4EC9B0;
-  --code-regex:        #D16969;
-  --code-important:    #C586C0;
+  /* — Code (VS Code 2026 Dark) — */
+  --code-background:   #242526;
+  --code-normal:       #BBBEBF;
+  --code-keyword:      #FF7B72;
+  --code-string:       #A5D6FF;
+  --code-comment:      #8B949E;
+  --code-function:     #D2A8FF;
+  --code-variable:     #FFA657;
+  --code-property:     #C9D1D9;
+  --code-type:         #FFA657;
+  --code-json-property: #7EE787;
+  --code-tag:          #7EE787;
+  --code-attribute:    #C9D1D9;
+  --code-number:       #79C0FF;
+  --code-operator:     #FF7B72;
+  --code-punctuation:  #BBBEBF;
+  --code-control:      #FF7B72;
+  --code-builtin:      #79C0FF;
+  --code-regex:        #A5D6FF;
+  --code-important:    #FF7B72;
+  --code-invalid:      #FFA198;
+  --code-inserted:     #7EE787;
+  --code-deleted:      #FFA198;
 
   /* — Callouts — */
   --callout-note:     86, 156, 214;
@@ -370,16 +381,19 @@
   --tag-background-hover: rgba(47, 114, 196, 0.32);
 
   /* — Tables — */
-  --table-border-color:         var(--background-modifier-border);
-  --table-header-background:    #252526;
-  --table-header-color:         var(--text-normal);
-  --table-row-alt-background:   #1A1A1A;
-  --table-row-hover-background: rgba(47, 114, 196, 0.10);
+  --table-border-color:          var(--background-modifier-border);
+  --table-header-border-color:   rgba(255, 255, 255, 0.69);
+  --table-row-border-color:      rgba(255, 255, 255, 0.18);
+  --table-header-background:     transparent;
+  --table-header-color:          var(--text-normal);
+  --table-row-alt-background:    transparent;
+  --table-row-hover-background:  transparent;
 
   /* — Blockquote — */
   --blockquote-border-color: rgba(255, 255, 255, 0.16);
   --blockquote-color:        #9D9D9D;
-  --bold-color:              #569CD6;
+  --bold-color:              var(--text-normal);
+  --markdown-rule-color:     rgba(255, 255, 255, 0.18);
   --italic-color:            #CE9178;
 
   /* — Checkbox — */
@@ -451,8 +465,12 @@
 body {
   --font-interface-override: var(--font-interface-theme);
   --font-text-override:      var(--font-text-theme);
-  --font-monospace-override: var(--font-monospace-theme);
   --font-text-size:          15px;
+  --code-size:               1em;
+  --code-value:             var(--code-number);
+  --h2-size:                 1.5em;
+  --hr-thickness:            1px;
+  --hr-color:                var(--markdown-rule-color);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-feature-settings: "ss01", "cv01", "cv09", "cv11";
@@ -461,12 +479,12 @@ body {
 
 .markdown-source-view.mod-cm6 .cm-line,
 .markdown-rendered {
-  line-height: 1.65;
+  line-height: var(--line-height-normal);
 }
 
 /* Heading sizes & weights */
 .markdown-rendered h1, .HyperMD-header-1, .cm-header-1 { font-size: 1.75em; font-weight: 600; }
-.markdown-rendered h2, .HyperMD-header-2, .cm-header-2 { font-size: 1.45em; font-weight: 600; }
+.markdown-rendered h2, .HyperMD-header-2, .cm-header-2 { font-size: var(--h2-size); font-weight: 600; }
 .markdown-rendered h3, .HyperMD-header-3, .cm-header-3 { font-size: 1.20em; font-weight: 600; }
 .markdown-rendered h4, .HyperMD-header-4, .cm-header-4 { font-size: 1.05em; font-weight: 600; }
 .markdown-rendered h5, .HyperMD-header-5, .cm-header-5 { font-size: 1.00em; font-weight: 600; }
@@ -485,6 +503,14 @@ body {
 .cm-header-4 { color: var(--h4-color); }
 .cm-header-5 { color: var(--h5-color); }
 .cm-header-6 { color: var(--h6-color); }
+
+/* VS Code Markdown: an H2 has 0.3em of space above a 1px bottom rule.
+ * Apply the rule to the editor line, not its individual token spans. */
+.markdown-rendered h2,
+body .markdown-source-view.mod-cm6 .cm-line.HyperMD-header-2 {
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid var(--markdown-rule-color);
+}
 
 .inline-title { color: var(--inline-title-color); font-weight: 600; }
 
@@ -696,11 +722,12 @@ body.is-translucent .prompt {
   border-left-color: var(--indentation-guide-color-active);
 }
 
-/* HR */
+/* VS Code Markdown separators use the same 1px rule as H2 headings. */
 .markdown-rendered hr,
-.cm-hr {
+.markdown-source-view.mod-cm6 hr {
   border: none;
-  border-top: 1px solid var(--background-modifier-border);
+  height: 1px;
+  border-bottom: var(--hr-thickness) solid var(--hr-color);
 }
 
 
@@ -729,8 +756,8 @@ body.is-translucent .prompt {
 /* Inline code — both editor and reading */
 .markdown-rendered :not(pre) > code,
 .cm-s-obsidian .cm-inline-code:not(.cm-formatting) {
-  font-family: var(--font-monospace-theme);
-  font-size: 0.92em;
+  font-family: var(--font-monospace, var(--font-monospace-theme));
+  font-size: 1em;
   background-color: var(--code-background);
   color: var(--code-normal);
   padding: 0.1em 0.4em;
@@ -746,30 +773,23 @@ body.is-translucent .prompt {
 
 /* Reading view: `pre` is one container, so its border can be applied once. */
 .markdown-rendered pre {
+  font-family: var(--font-monospace, var(--font-monospace-theme)) !important;
+  font-size: inherit !important;
   border: 1px solid var(--background-modifier-border);
   border-radius: var(--radius-m);
   box-shadow: var(--shadow-s);
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: pre;
 }
 
-/* Live Preview: Obsidian renders a fenced block as separate `.cm-line`s.
- * Keep only the side borders on the middle lines, then close the shape on
- * the first and last lines so every line does not become its own box. */
-body .markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock-bg {
-  border-left: 1px solid var(--background-modifier-border);
-  border-right: 1px solid var(--background-modifier-border);
-  border-radius: 0;
-}
-
-body .markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock-begin-bg {
-  border-top: 1px solid var(--background-modifier-border);
-  border-top-left-radius: var(--radius-m);
-  border-top-right-radius: var(--radius-m);
-}
-
-body .markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock-end-bg {
-  border-bottom: 1px solid var(--background-modifier-border);
-  border-bottom-left-radius: var(--radius-m);
-  border-bottom-right-radius: var(--radius-m);
+/* Use Obsidian's native block backgrounds to close one frame around the
+ * opening fence, editable lines and closing fence with its internal scrollbar. */
+body .markdown-source-view.mod-cm6 {
+  --code-border-width: 1px;
+  --code-border-color: var(--background-modifier-border);
+  --code-radius: var(--radius-m);
 }
 .markdown-rendered pre {
   padding: 14px 16px;
@@ -778,95 +798,194 @@ body .markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock-end-bg {
   background: transparent;
   padding: 0;
   border: none;
-  font-family: var(--font-monospace-theme);
-  font-size: 13px;
+  font-family: var(--font-monospace, var(--font-monospace-theme)) !important;
+  font-size: inherit !important;
   color: var(--code-normal);
+  white-space: inherit;
+  overflow-wrap: normal;
+  word-break: normal;
 }
-.HyperMD-codeblock { color: var(--code-normal); font-family: var(--font-monospace-theme); }
 
-/* CodeMirror 6 syntax tokens (editor view) */
-.cm-s-obsidian .cm-keyword,
-.cm-s-obsidian .tok-keyword           { color: var(--code-keyword); }
-.cm-s-obsidian .cm-string,
-.cm-s-obsidian .cm-string-2,
-.cm-s-obsidian .tok-string            { color: var(--code-string); }
-.cm-s-obsidian .cm-comment,
-.cm-s-obsidian .cm-block-comment,
-.cm-s-obsidian .cm-line-comment,
-.cm-s-obsidian .tok-comment           { color: var(--code-comment); font-style: italic; }
-.cm-s-obsidian .cm-number,
-.cm-s-obsidian .tok-number            { color: var(--code-number); }
-.cm-s-obsidian .cm-atom,
-.cm-s-obsidian .tok-atom              { color: var(--code-keyword); }
-.cm-s-obsidian .cm-variable,
-.cm-s-obsidian .cm-variable-2,
-.cm-s-obsidian .cm-variable-3,
-.cm-s-obsidian .tok-variableName      { color: var(--code-variable); }
-.cm-s-obsidian .cm-def,
-.cm-s-obsidian .tok-definition        { color: var(--code-function); }
-.cm-s-obsidian .cm-property,
-.cm-s-obsidian .tok-propertyName      { color: var(--code-property); }
-.cm-s-obsidian .cm-type,
-.cm-s-obsidian .cm-meta,
-.cm-s-obsidian .tok-typeName,
-.cm-s-obsidian .tok-className         { color: var(--code-type); }
-.cm-s-obsidian .cm-builtin,
-.cm-s-obsidian .tok-standard          { color: var(--code-builtin); }
-.cm-s-obsidian .cm-tag,
-.cm-s-obsidian .tok-tagName           { color: var(--code-tag); }
-.cm-s-obsidian .cm-attribute,
-.cm-s-obsidian .tok-attributeName     { color: var(--code-attribute); }
-.cm-s-obsidian .cm-operator,
-.cm-s-obsidian .tok-operator          { color: var(--code-operator); }
-.cm-s-obsidian .cm-punctuation,
-.cm-s-obsidian .cm-bracket,
-.cm-s-obsidian .tok-punctuation,
-.cm-s-obsidian .tok-bracket           { color: var(--code-punctuation); }
-.cm-s-obsidian .cm-qualifier          { color: var(--code-type); }
-.cm-s-obsidian .cm-link,
-.cm-s-obsidian .tok-link              { color: var(--text-accent); text-decoration: underline; }
-.cm-s-obsidian .cm-url,
-.cm-s-obsidian .tok-url               { color: var(--text-faint); }
-.cm-s-obsidian .cm-quote              { color: var(--text-muted); font-style: italic; }
-.cm-s-obsidian .cm-error,
-.cm-s-obsidian .tok-invalid           { color: var(--text-error); border-bottom: 1px dotted var(--text-error); }
-.cm-s-obsidian .cm-regexp,
-.cm-s-obsidian .tok-regexp            { color: var(--code-regex); }
-.cm-s-obsidian .tok-controlKeyword    { color: var(--code-control); }
+/* Live Preview: the local VSCode Code Scroll extension supplies a shared
+ * scrollbar for each overflowing block without scrolling Markdown prose. */
+body .markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock {
+  color: var(--code-normal);
+  font-family: var(--font-monospace, var(--font-monospace-theme)) !important;
+  font-size: inherit !important;
+  white-space: pre !important;
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+}
 
-/* Prism (Reading view) */
-.markdown-rendered code[class*="language-"],
-.markdown-rendered pre[class*="language-"] { color: var(--code-normal); }
-.token.keyword                    { color: var(--code-keyword); }
-.token.string,
-.token.attr-value                 { color: var(--code-string); }
-.token.comment,
-.token.prolog,
-.token.cdata                      { color: var(--code-comment); font-style: italic; }
-.token.function                   { color: var(--code-function); }
-.token.variable                   { color: var(--code-variable); }
-.token.property,
-.token.attr-name                  { color: var(--code-property); }
-.token.class-name,
-.token.namespace                  { color: var(--code-type); }
-.token.builtin                    { color: var(--code-builtin); }
-.token.tag                        { color: var(--code-tag); }
-.token.number,
-.token.boolean,
-.token.constant,
-.token.symbol                     { color: var(--code-number); }
-.token.operator,
-.token.entity,
-.token.url                        { color: var(--code-operator); }
-.token.punctuation                { color: var(--code-punctuation); }
-.token.regex                      { color: var(--code-regex); }
-.token.important                  { color: var(--code-important); font-weight: 600; }
-.token.selector                   { color: var(--code-type); }
-.token.atrule                     { color: var(--code-control); }
-.token.parameter                  { color: var(--code-variable); }
-.token.deleted                    { color: var(--text-error); }
-.token.inserted                   { color: var(--text-success); }
+/* Shared VS Code 2026 palette for CodeMirror (Live Preview) and Prism (Reading).
+ * The two engines tokenize languages differently; equivalent token categories
+ * use the same variables. Scope these rules to code, not Markdown prose.
+ * Source: microsoft/vscode extensions/theme-defaults/themes/2026-{light,dark}.json */
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-keyword,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-keyword,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-controlKeyword,
+body .markdown-rendered pre .token.keyword,
+body .markdown-rendered pre .token.atrule {
+  color: var(--code-keyword);
+}
 
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-string,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-string-2,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-string,
+body .markdown-rendered pre .token.string,
+body .markdown-rendered pre .token.char,
+body .markdown-rendered pre .token.attr-value,
+body .markdown-rendered pre .token.url {
+  color: var(--code-string);
+}
+
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-comment,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-block-comment,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-line-comment,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-comment,
+body .markdown-rendered pre .token.comment,
+body .markdown-rendered pre .token.prolog,
+body .markdown-rendered pre .token.doctype,
+body .markdown-rendered pre .token.cdata {
+  color: var(--code-comment);
+}
+
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-number,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-number,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-atom,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-atom,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-bool,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-literal,
+body .markdown-rendered pre .token.number,
+body .markdown-rendered pre .token.boolean,
+body .markdown-rendered pre .token.constant,
+body .markdown-rendered pre .token.symbol,
+body .markdown-rendered pre .token.entity {
+  color: var(--code-number);
+}
+
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-variable,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-variable-3,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-variableName,
+body .markdown-rendered pre .token.variable {
+  color: var(--code-variable);
+}
+
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-def,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-definition,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-function,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-functionName,
+body .markdown-rendered pre .token.function,
+body .markdown-rendered pre .token.function-variable {
+  color: var(--code-function);
+}
+
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-property,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-propertyName,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-variableName2,
+body .markdown-rendered pre .token.property,
+body .markdown-rendered pre .token.property-access,
+body .markdown-rendered pre .token.parameter {
+  color: var(--code-property);
+}
+
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-type,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-qualifier,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-typeName,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-className,
+body .markdown-rendered pre .token.class-name,
+body .markdown-rendered pre .token.namespace {
+  color: var(--code-type);
+}
+
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-builtin,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-variable-2,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-standard,
+body .markdown-rendered pre .token.builtin {
+  color: var(--code-builtin);
+}
+
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-tag,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-tagName,
+body .markdown-rendered pre .token.tag,
+body .markdown-rendered pre .token.selector {
+  color: var(--code-tag);
+}
+
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-attribute,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-attributeName,
+body .markdown-rendered pre .token.attr-name {
+  color: var(--code-attribute);
+}
+
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-operator,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-operator,
+body .markdown-rendered pre .token.operator {
+  color: var(--code-operator);
+}
+
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-punctuation,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-bracket,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-punctuation,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-bracket,
+body .markdown-rendered pre .token.punctuation {
+  color: var(--code-punctuation);
+}
+
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-meta,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-meta {
+  color: var(--code-keyword);
+}
+
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-link,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-link,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-url,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-url {
+  color: var(--code-string);
+}
+
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-regexp,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-regexp,
+body .markdown-rendered pre .token.regex {
+  color: var(--code-regex);
+}
+
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-error,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-invalid,
+body .markdown-rendered pre .token.invalid {
+  color: var(--code-invalid);
+}
+
+body .markdown-rendered pre .token.important {
+  color: var(--code-important);
+}
+
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-deleted,
+body .markdown-rendered pre .token.deleted {
+  color: var(--code-deleted);
+}
+
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock .tok-inserted,
+body .markdown-rendered pre .token.inserted {
+  color: var(--code-inserted);
+}
+
+/* VS Code gives JSON object keys their own tag-green scope. */
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock:is(.language-json, .language-jsonc, .language-json5) .cm-property,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock:is(.language-json, .language-jsonc, .language-json5) .tok-propertyName,
+body .markdown-rendered pre :is(.language-json, .language-jsonc, .language-json5) .token.property {
+  color: var(--code-json-property);
+}
+
+/* Keep Obsidian's chosen monospace font through Code Styler's line wrappers
+ * and Prism/CodeMirror spans. No code tokens use italic styles. */
+body .markdown-rendered pre > code,
+body .markdown-rendered pre > code :where(div, span),
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock,
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock :where(span):not(.code-block-flair) {
+  font-family: var(--font-monospace) !important;
+  font-style: normal !important;
+}
 
 /* ============================================================
  *  Section 11 — Callouts
@@ -924,29 +1043,53 @@ body .markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock-end-bg {
  * ============================================================ */
 
 /* Tables */
+/* Adjust row spacing here. The first value controls top/bottom padding,
+ * the second controls left/right padding in both Reading and Live Preview. */
+body {
+  --vscode-table-cell-padding-y: 10px;
+  --vscode-table-cell-padding-x: 10px;
+}
+
 .markdown-rendered table {
   border-collapse: collapse;
-  border-radius: var(--radius-m);
-  overflow: hidden;
-  border: 1px solid var(--table-border-color);
+  margin-bottom: 0.7em;
+  border: none !important;
+  border-radius: 0;
+  overflow: visible;
+  background: transparent !important;
 }
-.markdown-rendered th {
-  background-color: var(--table-header-background);
+.markdown-rendered table thead,
+.markdown-rendered table tbody,
+.markdown-rendered table tr {
+  background: transparent !important;
+}
+.markdown-rendered table th,
+.markdown-rendered table td {
+  border: none !important;
+  background: transparent !important;
+  padding: var(--vscode-table-cell-padding-y) var(--vscode-table-cell-padding-x);
+}
+
+/* Live Preview keeps cell padding on the inner editor wrapper. Leave the
+ * outer cell at zero so padding is not applied twice or shifts selection. */
+body .markdown-source-view.mod-cm6 .cm-table-widget th,
+body .markdown-source-view.mod-cm6 .cm-table-widget td {
+  padding: 0;
+}
+body .markdown-source-view.mod-cm6 .cm-table-widget .table-cell-wrapper {
+  padding: var(--vscode-table-cell-padding-y) var(--vscode-table-cell-padding-x);
+}
+
+.markdown-rendered table th {
   color: var(--table-header-color);
-  font-weight: 600;
-  border-bottom: 1px solid var(--table-border-color);
-  padding: 8px 12px;
+  font-weight: 700;
   text-align: left;
 }
-.markdown-rendered td {
-  border-top: 1px solid var(--table-border-color);
-  padding: 8px 12px;
+.markdown-rendered table thead th {
+  border-bottom: 1px solid var(--table-header-border-color) !important;
 }
-.markdown-rendered tr:nth-child(even) td {
-  background-color: var(--table-row-alt-background);
-}
-.markdown-rendered tr:hover td {
-  background-color: var(--table-row-hover-background);
+.markdown-rendered table > tbody > tr + tr > td {
+  border-top: 1px solid var(--table-row-border-color) !important;
 }
 
 /* Blockquote */
@@ -1107,6 +1250,12 @@ a.tag:hover,
   border: none !important;
   border-radius: 0 !important;
   box-shadow: none !important;
+}
+
+/* Settings section headings share the H2 rule, without restoring row cards. */
+.mod-settings .setting-item.setting-item-heading {
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid var(--markdown-rule-color) !important;
 }
 
 /* Inputs / buttons */
