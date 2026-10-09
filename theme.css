@@ -80,6 +80,7 @@
   --interactive-accent:        #005FB8;
   --interactive-accent-hover:  #1A6FBE;
   --interactive-accent-rgb:    0, 95, 184;
+  --interactive-accent-background:    #FAFAFA;
   --text-on-accent:            #FFFFFF;
 
   /* — Backgrounds — */
@@ -271,6 +272,7 @@
   --interactive-accent:        #2F72C4;
   --interactive-accent-hover:  #4A8AD8;
   --interactive-accent-rgb:    47, 114, 196;
+  --interactive-accent-background:    #242526;
   --text-on-accent:            #FFFFFF;
 
   /* — Backgrounds — */
@@ -681,7 +683,7 @@ body.is-translucent .prompt {
 }
 
 .cm-active.cm-line {
-  background-color: rgba(var(--interactive-accent-rgb), 0.06);
+  background-color: var(--interactive-accent-background);
 }
 
 .cm-line { padding: 0 6px; }
@@ -1092,9 +1094,20 @@ a.tag:hover,
   background-color: var(--background-modifier-active-hover);
   font-weight: 500;
 }
-.setting-item { border-top: 1px solid var(--background-modifier-border); }
+.mod-settings .setting-item { border-top: 0; }
 .setting-item-name { color: var(--text-normal); }
 .setting-item-description { color: var(--text-muted); font-size: var(--font-ui-small); }
+
+/* Settings rows should read as one continuous panel, not a stack of cards. */
+.mod-settings .setting-item,
+.mod-settings .setting-item-heading,
+.mod-settings .style-settings-heading,
+.mod-settings .style-settings-container .setting-item {
+  background-color: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
 
 /* Inputs / buttons */
 input[type="text"],
@@ -1118,6 +1131,14 @@ textarea:focus,
   outline: none;
   border-color: var(--interactive-accent);
   box-shadow: 0 0 0 3px rgba(var(--interactive-accent-rgb), 0.20);
+}
+
+/* Keep native select text clear of Obsidian's right-side dropdown arrows. */
+.dropdown {
+  padding-inline-end: 34px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 button,
 .clickable-icon {
