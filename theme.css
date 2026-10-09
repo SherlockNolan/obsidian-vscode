@@ -842,6 +842,13 @@ body.theme-dark .workspace-tabs.mod-top {
   --tab-container-background: var(--background-secondary);
   --sidebar-tab-container-background: var(--background-secondary);
 }
+/* Sidebar toggles belong to the tab strip, including when the window is inactive. */
+body .sidebar-toggle-button,
+body:is(.theme-light, .theme-dark).is-translucent .sidebar-toggle-button {
+  --tab-container-background: var(--background-secondary);
+  --sidebar-tab-container-background: var(--background-secondary);
+  background-color: var(--background-secondary) !important;
+}
 body.theme-dark:not(.is-focused) .status-bar,
 body.theme-dark.is-translucent:not(.is-focused) .status-bar {
   background-color: var(--vscode-status-bar-background-inactive);
