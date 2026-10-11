@@ -64,16 +64,19 @@ settings:
     description: 在阅读视图和编辑视图中启用正文两端对齐与自动断词。
     type: class-toggle
     default: true
-  - id: vscode-code-wrap
-    title: 代码块自动折行
-    description: 在阅读视图与实时预览中折行，可直接断开长词和路径。默认关闭，关闭时横向滚动；PDF 导出始终折行，折行处显示 ↩。
+  - id: vscode-dim-completed-tasks
+    title: 已完成待办文字变淡
+    description: 勾选后保留文字原有配色并降低不透明度，不显示删除线；关闭后恢复整行删除线。适用于阅读视图和实时预览。
     type: class-toggle
-    default: false
-  - id: vscode-code-line-numbers
-    title: 代码块行号
-    description: 在阅读视图、实时预览和 PDF 中显示代码行号，每个代码块从 1 开始；折行后的续行不重复编号。
-    type: class-toggle
-    default: false
+    default: true
+  - id: vscode-completed-task-opacity
+    title: 已完成待办文字不透明度（%）
+    description: 仅开启上方开关时生效。数值越小越淡，100 保留原色；超链接、粗体和行内代码保持各自配色。
+    type: variable-number-slider
+    default: 50
+    min: 0
+    max: 100
+    step: 5
 */
 
 
@@ -182,8 +185,8 @@ settings:
   --h2-color: #1F1F1F;
   --h3-color: #005FB8;
   --h4-color: #005FB8;
-  --h5-color: #795E26;
-  --h6-color: #5A5A5A;
+  --h5-color: #1F1F1F;
+  --h6-color: #1F1F1F;
   --inline-title-color: var(--text-normal);
 
   /* — Links — */
@@ -458,8 +461,8 @@ settings:
   --h2-color: #D4D4D4;
   --h3-color: #569CD6;
   --h4-color: rgb(101, 184, 252);
-  --h5-color: #DCDCAA;
-  --h6-color: #9D9D9D;
+  --h5-color: #D4D4D4;
+  --h6-color: #D4D4D4;
   --inline-title-color: var(--text-normal);
 
   /* — Links — */
@@ -1098,34 +1101,22 @@ body .markdown-rendered pre > button.copy-code-button {
   background-color: var(--code-background);
 }
 
-/* Live Preview: the local VSCode Code Scroll extension supplies a shared
- * scrollbar for each overflowing block without scrolling Markdown prose. */
+/* Live Preview code typography; editing behavior belongs to Better Obsidian. */
 body .markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock {
   color: var(--code-normal);
   font-family: var(--font-monospace, var(--font-monospace-theme)) !important;
   font-size: inherit !important;
-  white-space: pre !important;
-  overflow-wrap: normal !important;
-  word-break: normal !important;
 }
 
-/* The companion preserves original newlines and Prism spans in these wrappers.
- * With wrapping disabled they do not create additional layout boxes. */
-.markdown-rendered pre > code > .vscode-code-print-line {
-  display: contents;
-}
 
 body {
   /* Live Preview label placement and the return-arrow distance from its frame. */
   --vscode-code-flair-top: 2px;
   --vscode-code-flair-right: 6px;
   --vscode-code-wrap-marker-inset: 12px;
-  --vscode-code-number-width: 2ch;
   --vscode-code-line-number-color: color-mix(in srgb, var(--code-normal) 45%, var(--code-background));
   --vscode-code-active-line-number-color: color-mix(in srgb, var(--code-normal) 85%, var(--code-background));
   --vscode-code-active-line-background: color-mix(in srgb, var(--code-background) 94%, white);
-  /* A repeating return arrow, painted rather than inserted into copied text. */
-  --vscode-code-wrap-marker: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 24'%3E%3Cpath d='M13 6v5a3 3 0 0 1-3 3H3m4-4-4 4 4 4' fill='none' stroke='black' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 }
 body.theme-light {
   --vscode-code-active-line-background: color-mix(in srgb, var(--code-background) 40%, var(--background-primary));
@@ -1153,148 +1144,8 @@ body .markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock:is(.cm-active, .cm
   background-color: var(--vscode-code-row-background);
 }
 
-/* Numbers are generated content, never characters in the document or clipboard.
- * Their translation cancels horizontal scrolling while the code remains editable. */
-body.vscode-code-line-numbers .markdown-rendered pre > code > .vscode-code-print-line {
-  display: block;
-  position: relative;
-  min-height: 1lh;
-  padding-inline-start: calc(var(--vscode-code-number-width) + 1.5ch);
-}
-body.vscode-code-line-numbers .markdown-rendered pre > code > .vscode-code-line-break {
-  display: none;
-}
-body.vscode-code-line-numbers .markdown-source-view.mod-cm6 .cm-line.vscode-code-scroll-line {
-  padding-inline-start: calc(16px + var(--vscode-code-number-width) + 1.5ch);
-}
-body.vscode-code-line-numbers .markdown-rendered pre > code > .vscode-code-print-line::before,
-body.vscode-code-line-numbers .markdown-source-view.mod-cm6 .cm-line.vscode-code-scroll-line::before {
-  content: attr(data-vscode-code-line-number);
-  position: absolute;
-  inset-block: 0;
-  inset-inline-start: 0;
-  width: calc(var(--vscode-code-number-width) + 1ch);
-  padding-inline-end: 1ch;
-  box-sizing: border-box;
-  background-color: var(--vscode-code-row-background, var(--code-background));
-  color: var(--vscode-code-line-number-color);
-  font-variant-numeric: tabular-nums;
-  text-align: right;
-  white-space: pre;
-  transform: translateX(var(--vscode-code-scroll-offset, 0px));
-  z-index: 1;
-  user-select: none;
-  pointer-events: none;
-}
-body.vscode-code-line-numbers .markdown-source-view.mod-cm6 .cm-line.vscode-code-scroll-line::before {
-  inset-inline-start: 16px;
-}
-body.vscode-code-line-numbers .markdown-source-view.mod-cm6 .cm-line.vscode-code-scroll-line:is(.cm-active, .cm-activeLine)::before {
-  color: var(--vscode-code-active-line-number-color);
-}
-body.vscode-code-wrap.vscode-code-line-numbers .markdown-rendered pre > code > .vscode-code-print-line::before,
-body.vscode-code-wrap.vscode-code-line-numbers .markdown-source-view.mod-cm6 .cm-line.vscode-code-scroll-line::before {
-  transform: none;
-}
-
-/* Opt-in wrapping for both views; no hyphens are added to code. */
-body.vscode-code-wrap .markdown-rendered pre > code,
-body.vscode-code-wrap .markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock {
-  white-space: pre-wrap !important;
-  overflow-wrap: anywhere !important;
-  word-break: break-all !important;
-  hyphens: none !important;
-  text-align: left;
-}
-body.vscode-code-wrap .markdown-rendered pre > code {
-  overflow: visible;
-}
-body.vscode-code-wrap .markdown-rendered pre > code > .vscode-code-print-line {
-  display: block;
-  position: relative;
-  min-height: 1lh;
-  padding-inline-end: 1.5em;
-}
-body.vscode-code-wrap .markdown-rendered pre > code > .vscode-code-line-break,
-body.vscode-code-wrap .markdown-source-view.mod-cm6 .cm-line .vscode-code-scrollbar {
-  display: none !important;
-}
-body.vscode-code-wrap .markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock:not(.HyperMD-codeblock-begin):not(.HyperMD-codeblock-end) {
-  position: relative;
-  padding-inline-end: calc(1.5em + var(--vscode-code-wrap-marker-inset));
-}
-
-/* Paint one arrow per visual continuation, leaving the final row unmarked. */
-body.vscode-code-wrap .markdown-rendered pre > code > .vscode-code-print-line::after,
-body.vscode-code-wrap .markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock:not(.HyperMD-codeblock-begin):not(.HyperMD-codeblock-end)::after {
-  content: "";
-  position: absolute;
-  inset-block: 0 1lh;
-  left: auto;
-  inset-inline-end: 0;
-  width: 1em;
-  height: auto;
-  background-color: var(--text-muted);
-  -webkit-mask: var(--vscode-code-wrap-marker) right top / 1em 1lh repeat-y;
-  mask: var(--vscode-code-wrap-marker) right top / 1em 1lh repeat-y;
-  pointer-events: none;
-}
-body.vscode-code-wrap .markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock:not(.HyperMD-codeblock-begin):not(.HyperMD-codeblock-end)::after {
-  inset-inline-end: var(--vscode-code-wrap-marker-inset);
-}
-
-/* PDF export always wraps, independently of the screen setting. Never clip
- * overflowing paths, long words, nested tokens or code continuing onto a page. */
-@media print {
-  body .markdown-rendered pre,
-  body .markdown-rendered pre > code {
-    max-width: 100% !important;
-    min-width: 0 !important;
-    overflow: visible !important;
-    white-space: pre-wrap !important;
-    overflow-wrap: anywhere !important;
-    word-break: break-all !important;
-    hyphens: none !important;
-    text-align: left !important;
-  }
-  body .markdown-rendered pre > code :is(span, a) {
-    white-space: inherit !important;
-    overflow-wrap: inherit !important;
-    word-break: inherit !important;
-    hyphens: none !important;
-  }
-  body .markdown-rendered pre > code > .vscode-code-print-line {
-    display: block;
-    position: relative;
-    min-height: 1lh;
-    padding-inline-end: 1.5em;
-  }
-  body .markdown-rendered pre > code > .vscode-code-line-break,
-  body .markdown-rendered pre > button.copy-code-button {
-    display: none !important;
-  }
-  body .markdown-rendered pre > code > .vscode-code-print-line::after {
-    content: "";
-    position: absolute;
-    inset-block: 0 1lh;
-    inset-inline-end: 0;
-    width: 1em;
-    background-color: var(--text-muted);
-    -webkit-mask: var(--vscode-code-wrap-marker) right top / 1em 1lh repeat-y;
-    mask: var(--vscode-code-wrap-marker) right top / 1em 1lh repeat-y;
-    print-color-adjust: exact;
-    -webkit-print-color-adjust: exact;
-    pointer-events: none;
-  }
-  body.vscode-code-line-numbers .markdown-rendered pre > code > .vscode-code-print-line::before {
-    transform: none;
-    print-color-adjust: exact;
-    -webkit-print-color-adjust: exact;
-  }
-}
-
 /* Shared VS Code 2026 palette for CodeMirror (Live Preview) and Prism (Reading).
- * VSCode Code Scroll supplies Prism marks in Live Preview for matching token
+ * Better Obsidian code-scroll supplies Prism marks in Live Preview for matching token
  * classification. Native CodeMirror mappings remain available without it.
  * Source: microsoft/vscode extensions/theme-defaults/themes/2026-{light,dark}.json */
 body .markdown-source-view.mod-cm6 .HyperMD-codeblock.vscode-prism-code span:not(.token) {
@@ -1615,50 +1466,51 @@ body .markdown-source-view.mod-cm6 .cm-table-widget .table-cell-wrapper {
   margin-left: 0;
 }
 
-/* Checkboxes */
-.task-list-item-checkbox,
-input[type="checkbox"] {
-  appearance: none;
-  -webkit-appearance: none;
-  width: 14px;
-  height: 14px;
-  border: 1.5px solid var(--checkbox-border-color);
-  border-radius: var(--radius-s);
-  background-color: transparent;
-  cursor: pointer;
-  vertical-align: middle;
-  position: relative;
-  transition: all var(--anim-duration-fast) var(--anim-motion-smooth);
-}
-.task-list-item-checkbox:hover,
-input[type="checkbox"]:hover {
-  border-color: var(--checkbox-border-color-hover);
-}
+/* Native checkbox sizing and SVG checkmark are supplied by Obsidian. */
 /* Reading view's native +0.2em offset conflicts with middle alignment.
  * Match the baseline adjustment used by Live Preview instead. */
 body .markdown-preview-view .task-list-item-checkbox {
   top: -0.1em;
   vertical-align: middle;
 }
-.task-list-item-checkbox:checked,
-input[type="checkbox"]:checked {
-  background-color: var(--checkbox-color);
-  border-color: var(--checkbox-color);
+/* Both native renderers use these variables for completed-task styling.
+ * Without Style Settings, the default remains enabled. Removing its class
+ * restores Obsidian's line-through decoration. */
+body:not(.css-settings-manager),
+body.vscode-dim-completed-tasks {
+  --checklist-done-decoration: none;
+  --checklist-done-color: inherit;
 }
-.task-list-item-checkbox:checked::after,
-input[type="checkbox"]:checked::after {
-  content: "";
-  position: absolute;
-  left: 3.5px;
-  top: 0.5px;
-  width: 4px;
-  height: 8px;
-  border: solid var(--checkbox-marker-color);
-  border-width: 0 1.5px 1.5px 0;
-  transform: rotate(45deg);
+.markdown-rendered li.task-list-item.is-checked {
+  color: var(--checklist-done-color);
+  text-decoration: var(--checklist-done-decoration);
 }
-.task-list-item.is-checked .task-list-item-content,
-li.task-list-item[data-task="x"] { color: var(--text-faint); text-decoration: line-through; }
+/* Fade glyphs using each element's own currentColor, without replacing link,
+ * bold or code colors. Filling text separately leaves the native checkbox and
+ * inline-code backgrounds untouched, and avoids multiplying nested opacity. */
+body:is(:not(.css-settings-manager), .vscode-dim-completed-tasks)
+  :is(.markdown-rendered li.task-list-item, .markdown-source-view.mod-cm6 .HyperMD-task-line):is([data-task="x"], [data-task="X"], .is-checked),
+body:is(:not(.css-settings-manager), .vscode-dim-completed-tasks)
+  :is(.markdown-rendered li.task-list-item, .markdown-source-view.mod-cm6 .HyperMD-task-line):is([data-task="x"], [data-task="X"], .is-checked)
+  > :is(p, span, a, strong, b, em, i, code, mark),
+body:is(:not(.css-settings-manager), .vscode-dim-completed-tasks)
+  :is(.markdown-rendered li.task-list-item, .markdown-source-view.mod-cm6 .HyperMD-task-line):is([data-task="x"], [data-task="X"], .is-checked)
+  > :is(p, span, a, strong, b, em, i, code, mark) :is(span, a, strong, b, em, i, code, mark) {
+  -webkit-text-fill-color: color-mix(in srgb, currentColor calc(var(--vscode-completed-task-opacity, 50) * 1%), transparent);
+  text-decoration-color: color-mix(in srgb, currentColor calc(var(--vscode-completed-task-opacity, 50) * 1%), transparent);
+}
+/* An unchecked child task must not inherit its completed parent's text fill. */
+body:is(:not(.css-settings-manager), .vscode-dim-completed-tasks)
+  .markdown-rendered li.task-list-item:not([data-task="x"]):not([data-task="X"]):not(.is-checked),
+body:is(:not(.css-settings-manager), .vscode-dim-completed-tasks)
+  .markdown-rendered li.task-list-item:not([data-task="x"]):not([data-task="X"]):not(.is-checked)
+  > :is(p, span, a, strong, b, em, i, code, mark),
+body:is(:not(.css-settings-manager), .vscode-dim-completed-tasks)
+  .markdown-rendered li.task-list-item:not([data-task="x"]):not([data-task="X"]):not(.is-checked)
+  > :is(p, span, a, strong, b, em, i, code, mark) :is(span, a, strong, b, em, i, code, mark) {
+  -webkit-text-fill-color: currentColor;
+  text-decoration-color: currentColor;
+}
 
 /* Tags */
 a.tag,

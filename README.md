@@ -8,7 +8,7 @@
 
 - **Light & Dark mode** — follows system color scheme; 2026 Dark uses `#121314` editor backgrounds, `#191A1B` sidebar/window surfaces and `#202122` menus/widgets
 - **Theme accent colors** — `#0069CC` for 2026 Light, `#005FB8` for Light Modern, and `#2F72C4` for this theme's Dark palette; configurable per mode, with optional Obsidian accent override
-- **VSCode syntax highlighting** — 2026 Light/Dark colors and optional Light Modern colors; the local **VSCode Code Scroll** companion supplies matching Prism token classification in Live Preview and Reading view
+- **VSCode syntax highlighting** — 2026 Light/Dark colors and optional Light Modern colors; the local **Better Obsidian** companion supplies matching Prism token classification in Live Preview and Reading view
 - **macOS Tahoe-style polish** — SF Pro / SF Mono system font stack, 8–12 px rounded corners, defocused-window dim, `prefers-reduced-motion` support
 - **Vibrancy / translucency** — sidebar, status bar, command palette and modals get `backdrop-filter` blur when *Translucent window* is enabled
 - **Overlay scrollbars** — hidden by default, fade in on hover, macOS-style
@@ -50,11 +50,15 @@ Resetting a picker clears its custom color. Light mode then follows the selected
 
 **两端对齐与自动断词** is enabled by default, including without Style Settings. Its switch controls justification and automatic hyphenation in both reading and editing views. The former `hyphenation-and-justification.css` snippet is integrated into the theme; it no longer needs to be enabled separately.
 
-Keep the local **VSCode Code Scroll** plugin enabled for matching editable code highlighting and per-block horizontal scrolling in Live Preview. Reading-view code scrolls inside its frame while its copy button stays at the upper right.
+**已完成待办文字变淡** is enabled by default in **Settings → Style Settings → VSCode**, including when Style Settings is absent. Completed tasks retain the original text, link, bold and inline-code colors while their glyphs fade without a strike-through in Reading view and Live Preview. **已完成待办文字不透明度（%）** defaults to 50; lower values fade more, and 100 preserves the original appearance. Disabling the switch restores Obsidian's full-line strike-through. Nested text is faded once; unchecked child tasks and checkbox icons keep their normal contrast. Checkboxes use Obsidian's native SVG checkmark and sizing, retaining the theme's accent colors and reading-view alignment adjustment.
 
-**代码块自动折行** is off by default. Enable it in **Settings → Style Settings → VSCode** to wrap code in both views, including long words and paths. PDF export always wraps, even when the switch is off. With the companion plugin enabled, a return arrow marks each visual continuation; actual source-line endings stay unmarked. Arrows are painted and do not alter copied code.
+Keep the local **Better Obsidian** plugin and its **代码块增强（code-scroll）** feature enabled for matching editable code highlighting and per-block horizontal scrolling in Live Preview. Reading-view code scrolls inside its frame while its copy button stays at the upper right.
 
-**代码块行号** is also off by default. Enable it in the same section to number original code lines in both views and PDF, starting at 1 for each block. Blank lines are counted; visual continuations have no extra number. Numbers stay in the left gutter during horizontal scrolling and are excluded from copied code. Keep **VSCode Code Scroll** enabled for the line wrappers and editable-line numbers.
+**代码块自动折行** is off by default. Enable it in **Settings → Better Obsidian → 代码块** to wrap code in both views, including long words and paths. The plugin's code enhancement feature always wraps PDF export, even when the screen wrapping switch is off. A return arrow marks each visual continuation; actual source-line endings stay unmarked. Arrows are painted and do not alter copied code.
+
+**代码块行号** is also off by default. Enable it in **Settings → Better Obsidian → 代码块** to number original code lines in both views and PDF, starting at 1 for each block. Blank lines are counted; visual continuations have no extra number. Numbers stay in the left gutter during horizontal scrolling and are excluded from copied code. Keep its **代码块增强（code-scroll）** feature enabled. Existing Style Settings wrapping/numbering preferences migrate to the plugin; these switches no longer appear in Style Settings.
+
+The theme is responsible for CSS appearance: palette, accent, fonts, spacing, frames, Markdown layout and justification. Its Style Settings panel contains only those appearance options. Better Obsidian owns code scrolling, wrap/number behavior, PDF continuation markers, LaTeX conversion and paste cleanup. Disabling the plugin leaves theme appearance available and returns Live Preview to native editing behavior. Plugin code layout works with other themes as well.
 
 In `theme.css`, `--vscode-code-flair-top` and `--vscode-code-flair-right` position the Live Preview language/copy label. Lower top values move it up. `--vscode-code-wrap-marker-inset` (`12px`) controls the Live Preview return-arrow inset from the right edge. The label centers both language text and the copy/confirmation icon.
 
